@@ -136,7 +136,7 @@ function drawGhost(g){
 }
 function showMessage(title,text,canResume=false){
  running=false;document.getElementById('ovtitle').textContent=title;document.getElementById('ovtext').textContent=text;document.getElementById('start').textContent=canResume?'FOLYTATÁS':'ÚJRAKEZDÉS';document.getElementById('overlay').classList.remove('hidden');
- document.getElementById('start').onclick=()=>{document.getElementById('overlay').classList.add('hidden');running=true;lastTime=performance.now();loop(lastTime);};
+ document.getElementById('start').onclick=()=>{document.getElementById('overlay').classList.add('hidden');paused=false;document.getElementById('pause').innerHTML='SZÜNET<br>Ⅱ';running=true;lastTime=performance.now();loop(lastTime);};
 }
 function endGame(success){
  running=false;won=true;document.getElementById('ovtitle').textContent=success?'DUBAJ! A KIJÁRAT MEGVAN':'VÉGE A MENEKÜLÉSNEK';
@@ -147,7 +147,7 @@ function endGame(success){
 function loop(t){if(!running)return;const dt=Math.min(40,t-lastTime||16);lastTime=t; // fixed logical pacing, independent of screen refresh
  update();draw();if(running)requestAnimationFrame(loop);}
 function start(){score=0;rep=100;lives=3;level=1;won=false;paused=false;build();setHud();running=true;document.getElementById('overlay').classList.add('hidden');document.getElementById('start').onclick=null;lastTime=performance.now();requestAnimationFrame(loop);}
-document.getElementById('start').addEventListener('click',()=>{if(!running||won)start();});
+document.getElementById('start').onclick=start;
 document.getElementById('pause').addEventListener('click',()=>{if(!running)return;paused=!paused;document.getElementById('pause').innerHTML=paused?'FOLYTAT<br>▶':'SZÜNET<br>Ⅱ';if(!paused){lastTime=performance.now();requestAnimationFrame(loop);}else showMessage('SZÜNET','A menekülés megállt. Ha készen állsz, folytasd.',true);});
 document.querySelectorAll('[data-dir]').forEach(b=>{const d=b.dataset.dir;b.addEventListener('pointerdown',e=>{e.preventDefault();wanted=d;},{passive:false});});
 window.addEventListener('keydown',e=>{const k=e.key.toLowerCase();const mapKey={arrowup:'up',w:'up',arrowdown:'down',s:'down',arrowleft:'left',a:'left',arrowright:'right',d:'right'};if(mapKey[k]){e.preventDefault();wanted=mapKey[k];}if(k===' '){e.preventDefault();if(running){paused=!paused;if(!paused){lastTime=performance.now();requestAnimationFrame(loop);}else showMessage('SZÜNET','Nyomd meg a Folytatás gombot, amikor készen állsz.',true);}}});
