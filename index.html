@@ -14,7 +14,7 @@
 (()=>{'use strict';
 const canvas=document.getElementById('game'),ctx=canvas.getContext('2d'),T=32,C=15,R=17,W=C*T,H=R*T;
 const DIR={up:{x:0,y:-1},down:{x:0,y:1},left:{x:-1,y:0},right:{x:1,y:0}},KEY={arrowup:'up',w:'up',arrowdown:'down',s:'down',arrowleft:'left',a:'left',arrowright:'right',d:'right'};
-let grid,player,enemies,coins,particles,floating,score,lives,frame=0,active=false,paused=false,over=false,last=0,acc=0,stepMs=200,desired='right',facing='right',shake=0,combo=0,comboTimer=0,exit={x:13,y:15},audio=null;
+let grid,player,enemies,coins,particles,floating,score,lives,frame=0,active=false,paused=false,over=false,last=0,acc=0,stepMs=200,desired='right',facing='right',turnBuffer=0,shake=0,combo=0,comboTimer=0,exit={x:13,y:15},audio=null;
 function makeMaze(){grid=Array.from({length:R},()=>Array(C).fill('#'));let stack=[[1,1]];grid[1][1]=' ';while(stack.length){let [x,y]=stack[stack.length-1],opts=[];for(let d of Object.values(DIR)){let nx=x+d.x*2,ny=y+d.y*2;if(nx>0&&ny>0&&nx<C-1&&ny<R-1&&grid[ny][nx]==='#')opts.push({x:nx,y:ny,wx:x+d.x,wy:y+d.y});}if(!opts.length){stack.pop();continue;}let o=opts[Math.floor(Math.random()*opts.length)];grid[o.wy][o.wx]=' ';grid[o.y][o.x]=' ';stack.push([o.x,o.y]);}
  // Create extra loops so routes have choices, not just a long corridor.
  for(let y=1;y<R-1;y++)for(let x=1;x<C-1;x++)if(grid[y][x]==='#'&&Math.random()<.13){let n=0;for(let d of Object.values(DIR))if(grid[y+d.y][x+d.x]===' ')n++;if(n>=2)grid[y][x]=' ';}
@@ -39,7 +39,7 @@ function makeMaze(){grid=Array.from({length:R},()=>Array(C).fill('#'));let stack
 }
 function walkable(x,y){return x>=0&&y>=0&&x<C&&y<R&&grid[y][x]!=='#'&&(grid[y][x]!=='D'||coins.every(c=>c.got));}
 function distance(x,y,a,b){return Math.abs(x-a)+Math.abs(y-b);}
-function reset(){makeMaze();grid[exit.y][exit.x]='D';player={x:1,y:1,fromX:1,fromY:1,face:'right',inv:0};coins=[];particles=[];floating=[];score=0;lives=3;combo=0;comboTimer=0;frame=0;acc=0;desired='right';facing='right';shake=0;
+function reset(){makeMaze();grid[exit.y][exit.x]='D';player={x:1,y:1,fromX:1,fromY:1,face:'right',inv:0};coins=[];particles=[];floating=[];score=0;lives=3;combo=0;comboTimer=0;frame=0;acc=0;desired='right';facing='right';turnBuffer=0;shake=0;
  const reserved=new Set(['1,1',exit.x+','+exit.y,'1,2','2,1']);for(let y=1;y<R-1;y++)for(let x=1;x<C-1;x++){if(grid[y][x]===' '&&!reserved.has(x+','+y)){coins.push({x,y,big:Math.random()<.10,got:false,phase:Math.random()*6.28});}}
  // Start enemies in distant reachable pockets; they move on the maze paths.
  const spots=[[C-2,1],[C-2,R-2],[1,R-2]];enemies=spots.slice(0,2).map((p,i)=>({x:p[0],y:p[1],fromX:p[0],fromY:p[1],dir:i?'up':'left',color:i?'#72d8ff':'#ff70ad',stun:0,phase:i*2}));enemies.forEach(e=>{if(!walkable(e.x,e.y)){let p=findOpenFar();e.x=p.x;e.y=p.y;e.fromX=e.x;e.fromY=e.y;}});updateHud();draw();}
@@ -50,8 +50,8 @@ function addBurst(x,y,color,n=9){for(let i=0;i<n;i++){let a=Math.random()*Math.P
 function pop(x,y,text,color){floating.push({x:x*T+T/2,y:y*T+8,text,color,life:42});}
 function sound(freq=600,duration=.055,type='square'){try{audio=audio||new(window.AudioContext||window.webkitAudioContext)();let o=audio.createOscillator(),g=audio.createGain();o.type=type;o.frequency.value=freq;g.gain.setValueAtTime(.045,audio.currentTime);g.gain.exponentialRampToValueAtTime(.001,audio.currentTime+duration);o.connect(g);g.connect(audio.destination);o.start();o.stop(audio.currentTime+duration);}catch(e){}}
 function tick(){if(!active||paused||over)return;frame++;if(player.inv>0)player.inv--;if(comboTimer>0)comboTimer--;else combo=0;
- // Buffered turning: keep the requested direction and take it at the first open tile.
- if(move(player,desired)){facing=desired;}else move(player,facing);player.face=facing;
+ // Turn input is buffered for at most one tile ahead, then expires.
+ if(turnBuffer>0){if(move(player,desired)){facing=desired;turnBuffer=0;}else{move(player,facing);turnBuffer--;}}else move(player,facing);player.face=facing;
  for(const c of coins)if(!c.got&&c.x===player.x&&c.y===player.y){c.got=true;combo=comboTimer>0?combo+1:1;comboTimer=70;let val=c.big?500000:100000;val*=Math.min(combo,5);score+=val;addBurst(c.x,c.y,c.big?'#ffe36b':'#75fbd0',c.big?20:10);pop(c.x,c.y,'+'+val.toLocaleString('hu-HU')+' Ft',c.big?'#ffe36b':'#75fbd0');sound(c.big?880:620,.05,c.big?'triangle':'square');if(combo>=3)sound(900+combo*100,.09,'sine');}
  for(const e of enemies){if(e.stun>0){e.stun--;continue;}if(Math.random()<.08)continue;let opts=Object.keys(DIR).filter(d=>walkable(e.x+DIR[d].x,e.y+DIR[d].y));if(!opts.length)continue;let rev={up:'down',down:'up',left:'right',right:'left'}[e.dir];let usable=opts.filter(d=>d!==rev);if(!usable.length)usable=opts;let d=e.dir;if(Math.random()<.74){usable.sort((a,b)=>distance(e.x+DIR[a].x,e.y+DIR[a].y,player.x,player.y)-distance(e.x+DIR[b].x,e.y+DIR[b].y,player.x,player.y));d=usable[0];}else d=usable[Math.floor(Math.random()*usable.length)];if(!move(e,d)){d=usable[Math.floor(Math.random()*usable.length)];move(e,d);}e.dir=d;}
  for(const e of enemies)if(player.inv===0&&((e.x===player.x&&e.y===player.y)||(e.fromX===player.x&&e.fromY===player.y&&e.x===player.fromX&&e.y===player.fromY))){lives--;combo=0;comboTimer=0;shake=12;player.x=1;player.y=1;player.fromX=1;player.fromY=1;player.inv=35;e.stun=45;let p=findOpenFar();e.x=p.x;e.y=p.y;e.fromX=e.x;e.fromY=e.y;addBurst(player.x,player.y,'#ff75ae',22);pop(player.x,player.y,'BONK!','#ff75ae');sound(140,.2,'sawtooth');if(lives<=0){finish(false);return;}}
@@ -73,7 +73,7 @@ function start(){reset();active=true;paused=false;over=false;document.getElement
 function loop(now){if(!active||paused)return;let dt=Math.min(45,now-last);last=now;acc+=dt;while(acc>=stepMs){acc-=stepMs;tick();if(!active)break;}for(let i=particles.length-1;i>=0;i--){let p=particles[i];p.x+=p.vx;p.y+=p.vy;p.vy+=.1;p.life--;if(p.life<=0)particles.splice(i,1);}for(let i=floating.length-1;i>=0;i--){let p=floating[i];p.y-=.55;p.life--;if(p.life<=0)floating.splice(i,1);}draw();if(active)requestAnimationFrame(loop);}
 document.getElementById('start').onclick=start;
 document.getElementById('pause').onclick=()=>{if(over)return;if(!active&&!paused)return;paused=!paused;if(paused){active=false;show('SZÜNET 🧃','MatMan szusszan egyet és megszámolja a zsebeit.','FOLYTATÁS ▶');document.getElementById('start').onclick=()=>{document.getElementById('overlay').classList.add('hidden');paused=false;active=true;document.getElementById('start').onclick=start;last=performance.now();requestAnimationFrame(loop);};}else{active=true;last=performance.now();requestAnimationFrame(loop);}};
-function setDirection(d){if(DIR[d])desired=d;}
+function setDirection(d){if(DIR[d]){desired=d;turnBuffer=2;}}
 document.querySelectorAll('[data-dir]').forEach(b=>{
  b.addEventListener('pointerdown',e=>{e.preventDefault();setDirection(b.dataset.dir);},{passive:false});
  b.addEventListener('click',e=>{e.preventDefault();setDirection(b.dataset.dir);});
