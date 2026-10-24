@@ -3,141 +3,154 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
-<meta name="theme-color" content="#101526">
-<meta name="description" content="Pénzeső Simulator — egy pixel-art arcade játék. Kapd el a pénzt, kerüld a bajt, és próbálj megúszni mindent!">
-<title>Pénzeső Simulator — MatMan</title>
+<meta name="theme-color" content="#080d22">
+<meta name="description" content="Matolcsy menekülőútja — politikai szatíra pixel-art labirintusjáték. Gyűjtsd a pénzt Magyarországtól Dubajig!">
+<title>MATOLCSY: MENEKÜLŐÚT DUBAJBA</title>
 <style>
-:root{color-scheme:dark;--bg:#101526;--panel:#1b2540;--line:#394866;--gold:#ffd166;--mint:#73f0b4;--red:#ff647c;--ink:#f4f7ff}
-*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--ink);font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}body{min-height:100dvh;display:flex;justify-content:center;overscroll-behavior:none}.app{width:min(100%,760px);padding:12px 12px calc(14px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:10px}.top{display:flex;justify-content:space-between;align-items:center;gap:8px}.brand{font-weight:1000;letter-spacing:1px;font-size:clamp(16px,4vw,23px)}.brand span{color:var(--gold)}.tag{font-size:10px;color:#b9c5df;border:1px solid var(--line);padding:5px 7px;border-radius:4px}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}.stat{background:var(--panel);border:2px solid var(--line);padding:8px 7px;border-radius:6px;min-width:0}.stat small{display:block;color:#aab7d3;font-size:10px;margin-bottom:5px}.stat strong{font-size:clamp(13px,3.5vw,19px);color:var(--gold);white-space:nowrap}.stage{position:relative;border:3px solid #536387;border-radius:7px;overflow:hidden;background:#121d32;box-shadow:0 5px 0 #080d17}.stage canvas{display:block;width:100%;height:auto;aspect-ratio:360/500;image-rendering:pixelated;touch-action:none}.overlay{position:absolute;inset:0;background:#0c1220df;display:flex;align-items:center;justify-content:center;padding:20px;text-align:center}.overlay.hidden{display:none}.modal{width:min(100%,360px);background:#1b2540;border:3px solid #536387;box-shadow:6px 6px 0 #080d17;padding:18px 14px}.modal h1{margin:0 0 10px;color:var(--gold);font-size:clamp(21px,6vw,31px);line-height:1.15}.modal p{font-size:13px;line-height:1.6;color:#d2dbef}.btn{font:inherit;font-weight:900;border:0;border-bottom:4px solid #bb8b20;border-radius:4px;background:var(--gold);color:#242033;padding:12px 15px;min-height:46px;cursor:pointer;touch-action:manipulation}.btn:active{transform:translateY(2px);border-bottom-width:2px}.btn.secondary{background:#a8b9df;border-color:#65779f}.btn.danger{background:var(--red);border-color:#a8314c}.btn:disabled{opacity:.45;cursor:not-allowed}.modal-actions{display:flex;flex-direction:column;gap:8px;margin-top:14px}.hint{text-align:center;color:#9eacc9;font-size:11px;line-height:1.5}.controls{display:grid;grid-template-columns:1fr 1fr 1fr;gap:9px;touch-action:manipulation}.control{min-height:57px;border:2px solid #536387;border-bottom-width:5px;border-radius:7px;background:#1b2540;color:white;font:900 23px inherit;font-size:23px;touch-action:manipulation;user-select:none;-webkit-user-select:none}.control:active,.control.active{background:#35466b;transform:translateY(2px);border-bottom-width:3px}.control small{display:block;font-size:9px;color:#aab7d3;margin-top:2px}.footer{text-align:center;font-size:10px;color:#687795}.quiz-copy{font-size:14px!important;color:#fff!important;font-weight:bold}.quiz-feedback{min-height:18px;color:var(--mint);font-size:12px}@media(min-width:600px){.app{padding-top:20px;gap:12px}.stage{max-height:66dvh}.stage canvas{height:min(66dvh,650px);width:100%;object-fit:contain}.controls{max-width:520px;width:100%;margin:auto}.control{min-height:52px}}
+:root{color-scheme:dark;--bg:#080d22;--panel:#111a36;--line:#293966;--gold:#ffda4a;--cyan:#50e6ff;--red:#ff5268;--green:#6eff9a}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:radial-gradient(ellipse at top,#17234a 0,#080d22 65%);color:#f5f7ff;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}body{padding:12px;display:flex;justify-content:center}.app{width:min(100%,760px)}header{text-align:center;margin:4px 0 12px}h1{font-size:clamp(20px,4.7vw,34px);line-height:1.12;letter-spacing:1px;margin:5px 0;color:var(--gold);text-shadow:3px 3px #8b351e} .sub{font-size:11px;color:#aab8e5;letter-spacing:2px}.hud{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:8px}.stat{border:1px solid var(--line);background:#111a36;border-radius:8px;padding:8px 10px;min-width:0}.stat label{display:block;font-size:9px;color:#92a5d8;letter-spacing:1px;margin-bottom:4px}.stat strong{font-size:clamp(13px,3vw,19px);color:#fff;white-space:nowrap}.stat.money strong{color:var(--green)}.stage{display:flex;justify-content:space-between;gap:8px;align-items:center;margin:0 2px 7px;font-size:10px;color:#b6c5ee}.stage b{color:var(--cyan)}.board{position:relative;border:2px solid #334a88;background:#050916;border-radius:10px;overflow:hidden;box-shadow:0 0 0 4px #0b122b,0 15px 45px #0008}canvas{display:block;width:100%;height:auto;image-rendering:pixelated;touch-action:none}.overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:#050916e8;padding:20px;text-align:center}.overlay.hidden{display:none}.dialog{max-width:420px}.dialog h2{color:var(--gold);font-size:clamp(20px,5vw,30px);margin:0 0 12px}.dialog p{font-size:12px;line-height:1.7;color:#d2daf5}.btn{font:inherit;font-weight:900;border:0;border-radius:7px;padding:13px 18px;background:var(--gold);color:#171326;cursor:pointer;box-shadow:0 4px #9c6727}.btn:active{transform:translateY(2px);box-shadow:0 2px #9c6727}.hint{font-size:10px!important;color:#92a5d8!important}.controls{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;max-width:320px;margin:12px auto 8px;touch-action:manipulation}.pad{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;grid-column:1/3}.control{height:47px;border:1px solid #344878;background:#111a36;color:#f5f7ff;border-radius:9px;font-size:20px;font-weight:bold;touch-action:manipulation;user-select:none;-webkit-user-select:none}.control:active{background:#253760}.blank{visibility:hidden}.action{font-size:11px;line-height:1.4;color:var(--gold)}.foot{text-align:center;color:#6678a8;font-size:9px;line-height:1.6;margin:8px auto 0;max-width:560px}.tag{display:inline-block;border:1px solid #664f33;border-radius:4px;padding:3px 6px;color:#ffcf83;font-size:9px;margin-bottom:7px}
+@media(min-width:600px){body{padding:20px}.controls{margin-top:14px}.control{height:42px}}
 </style>
 </head>
-<body>
-<main class="app">
-  <header class="top"><div class="brand">PÉNZESŐ <span>SIMULATOR</span></div><div class="tag">PIXEL ARCADE · v0.1</div></header>
-  <section class="stats" aria-label="Játékállás">
-    <div class="stat"><small>ELKAPOTT PÉNZ</small><strong id="money">0 Ft</strong></div>
-    <div class="stat"><small>HÍRNÉV</small><strong id="rep">100%</strong></div>
-    <div class="stat"><small>REKORD</small><strong id="best">0 Ft</strong></div>
-  </section>
-  <section class="stage" aria-label="Játéktér">
-    <canvas id="game" width="360" height="500" aria-label="Pixel art játéktér"></canvas>
-    <div class="overlay" id="overlay"><div class="modal"><h1 id="modalTitle">PÉNZESŐ<br>SIMULATOR</h1><p id="modalText">Mozogj jobbra-balra, kapd el a lehulló pénzt, és kerüld a kellemetlen ügyeket. A kérdésekre a „Jó” válasszal felelhetsz.</p><div class="modal-actions" id="modalActions"><button class="btn" id="startBtn">JÁTÉK INDÍTÁSA ▶</button><button class="btn secondary" id="howBtn">HOGYAN KELL JÁTSZANI?</button></div></div></div>
-  </section>
-  <section class="controls" aria-label="Érintős irányítás">
-    <button class="control" id="left" aria-label="Balra">◀<small>BALRA</small></button>
-    <button class="control" id="jump" aria-label="Akció">★<small>AKCIÓ</small></button>
-    <button class="control" id="right" aria-label="Jobbra">▶<small>JOBBRA</small></button>
-  </section>
-  <p class="hint">Mobilon használd a gombokat, számítógépen a ← → nyilakat vagy az A / D billentyűket.<br>Gyűjts pénzt, kerüld a botrányokat, és érd el a 30 millió Ft-ot!</p>
-  <div class="footer">Fiktív, szatirikus játék · Minden összeg játékbeli pénz</div>
+<body><main class="app">
+<header><div class="sub">EGY KÉPZELETBELI POLITIKAI ARCADE</div><h1>MATOLCSY: MENEKÜLŐÚT DUBAJBA</h1><div class="sub">MAGYARORSZÁG → PÉNZ → DUBAJ</div></header>
+<section class="hud"><div class="stat money"><label>ÖSSZEGYŰJTÖTT PÉNZ</label><strong id="cash">0 Ft</strong></div><div class="stat"><label>HÍRNÉV</label><strong id="rep">100%</strong></div><div class="stat"><label>ÉLETEK</label><strong id="lives">♥ ♥ ♥</strong></div></section>
+<div class="stage"><span>KIINDULÓPONT: <b id="country">MAGYARORSZÁG</b></span><span id="level">1. LABIRINTUS / 3</span></div>
+<div class="board"><canvas id="game" width="456" height="504" aria-label="Pixel art labirintusjáték"></canvas><div class="overlay" id="overlay"><div class="dialog"><div class="tag">SZATÍRA • NEM VALÓS ESEMÉNY</div><h2 id="ovtitle">A nagy pénzmenekítés</h2><p id="ovtext">Matolcsy karikatúrájaként járd be a labirintust! Szedd össze a szétszórt bankjegyeket, kerüld a kellemetlen kérdéseket és a felügyelőket, majd juss el a dubaji kijáratig.</p><p class="hint">Irányítás: nyilak / WASD vagy a lenti gombok. A nagy bankjegyek bónuszt adnak.</p><button class="btn" id="start">INDULJON A MENEKÜLÉS</button></div></div></div>
+<div class="controls"><div class="pad"><button class="control blank" tabindex="-1">·</button><button class="control" data-dir="up" aria-label="Fel">▲</button><button class="control blank" tabindex="-1">·</button><button class="control" data-dir="left" aria-label="Balra">◀</button><button class="control" data-dir="down" aria-label="Le">▼</button><button class="control" data-dir="right" aria-label="Jobbra">▶</button></div><button class="control action" id="pause">SZÜNET<br>Ⅱ</button></div>
+<div class="foot">FIKCIÓS POLITIKAI PARÓDIA. A szereplő karikatúra, a játékmenet kitalált. A játék nem állít konkrét bűncselekményt tényként.</div>
 </main>
 <script>
-(()=> {
-const canvas=document.querySelector('#game'),ctx=canvas.getContext('2d');
-ctx.imageSmoothingEnabled=false;
-const $=id=>document.getElementById(id);
-const W=360,H=500;
-const questions=[
-['Mi a legfontosabb gazdasági mutató?','Jó, ha szépen mutat a grafikon!'],
-['Ha elfogy a pénz, mi a teendő?','Jó, ha készül egy újabb terv.'],
-['Mire való a költségvetés?','Jó, ha kreatívan értelmezzük.'],
-['Miért esik az árfolyam?','Jó, ha találunk rá egy bonyolult magyarázatot.'],
-['Hogyan kezeljük a váratlan kiadásokat?','Jó, ha előre nem láthatóként hivatkozunk rájuk.'],
-['Mi a siker titka?','Jó, ha a sikert mi jelentjük be.'],
-['Mitől lesz olcsóbb a bevásárlás?','Jó, ha kisebb kosárral indulunk.'],
-['Mikor kész a reform?','Jó, ha sajtótájékoztatót tartottunk róla.'],
-['Mi a teendő a kritikával?','Jó, ha szakmai párbeszédnek nevezzük.'],
-['Mit jelent a fenntartható növekedés?','Jó, ha a következő negyedévig kitart.'],
-['Miért fontos a tartalék?','Jó, ha van miből új tervet indítani.'],
-['Hogyan csökkentsük a hiányt?','Jó, ha átnevezzük a sort.'],
-['Mi a gazdasági csoda alapja?','Jó, ha van hozzá prezentáció.'],
-['Mi a teendő, ha kérdeznek a számokról?','Jó, ha mutatunk egy másik grafikont.'],
-['Mikor jó egy előrejelzés?','Jó, ha utólag is megmagyarázható.'],
-['Mi a legjobb befektetés?','Jó, ha másnap is emlékszünk rá.'],
-['Miért fontos a bizalom?','Jó, ha legalább a sajtóközleményben megvan.'],
-['Hogyan lesz több pénz?','Jó, ha a táblázatban több sor van.'],
-['Mi a válságkezelés első lépése?','Jó, ha összeül egy munkacsoport.'],
-['Mitől hiteles egy terv?','Jó, ha van rajta címlap.'],
-['Mi a teendő, ha borul a matek?','Jó, ha új módszertant vezetünk be.'],
-['Mire jó a nagy bejelentés?','Jó, ha mindenki arra figyel.'],
-['Hogyan mérjük a sikert?','Jó, ha mi választjuk a mérőszámot.'],
-['Mi a legjobb időzítés?','Jó, ha péntek délután van.'],
-['Mit kezdjünk a kellemetlen adattal?','Jó, ha lábjegyzetbe kerül.'],
-['Hogyan kezeljük a túlköltést?','Jó, ha rendkívüli intézkedésnek hívjuk.'],
-['Miért kell új stratégia?','Jó, ha a régi már túl ismert.'],
-['Mi a jó kommunikáció?','Jó, ha rövid és tele van szakkifejezéssel.'],
-['Mi a teendő a sikertelen projekttel?','Jó, ha pilotnak nevezzük.'],
-['Honnan tudjuk, hogy működik a rendszer?','Jó, ha van róla dashboard.'],
-['Mi a gazdasági optimizmus?','Jó, ha a következő hónapban is optimisták vagyunk.'],
-['Mitől lesz jobb a mutató?','Jó, ha új alapévet választunk.'],
-['Mi a legfontosabb döntés?','Jó, ha döntés-előkészítő bizottság dönt róla.'],
-['Miért kell gyorsan cselekedni?','Jó, ha előbb készül egy tanulmány.'],
-['Mi a végső cél?','Jó, ha a célkitűzés eléri a célt.'],
-['Mi a teendő, ha lebukunk?','Jó, ha azt mondjuk: tanulási folyamat.']
+(()=>{
+'use strict';
+const canvas=document.getElementById('game'),ctx=canvas.getContext('2d');
+const TILE=24,COLS=19,ROWS=21,W=COLS*TILE,H=ROWS*TILE;
+const raw=[
+"###################",
+"#P....#.....#....$#",
+"#.##..#.###.#.##..#",
+"#....##...#...##..#",
+"###.####.#.####.###",
+"#...#....#....#...#",
+"#.###.##...##.###.#",
+"#.....#.....#.....#",
+"#####.#.###.#.#####",
+"#.....#..G..#.....#",
+"#.###.##...##.###.#",
+"#...#....#....#...#",
+"###.####.#.####.###",
+"#....##...#...##..#",
+"#.##..#.###.#.##..#",
+"#....#.....#......#",
+"##.#.#.###.#.###.##",
+"#..#...#...#...#..#",
+"#.####.#.#.####.#.#",
+"#...............D.#",
+"###################"
 ];
-let state='menu',money=0,rep=100,best=Number(localStorage.getItem('matman-best')||0),player={x:168,y:426,w:24,h:36},items=[],particles=[],frame=0,spawn=0,speed=2.2,questionAt=0,activeQuestion=null,keys={left:false,right:false},lastTime=0,raf=0;
-$('best').textContent=fmt(best);
-function fmt(n){return Math.floor(n).toLocaleString('hu-HU')+' Ft'}
-function rand(a,b){return Math.random()*(b-a)+a}
-function rect(x,y,w,h,c){ctx.fillStyle=c;ctx.fillRect(Math.round(x),Math.round(y),Math.round(w),Math.round(h))}
-function text(t,x,y,size=12,color='#fff',align='left'){ctx.fillStyle=color;ctx.font='bold '+size+'px monospace';ctx.textAlign=align;ctx.fillText(t,x,y)}
-function drawScene(){
- rect(0,0,W,H,'#111b2e');
- // distant skyline
- for(let i=0;i<10;i++){let x=i*39-3,h=45+(i*29%75);rect(x,255-h,29,h,'#1d2c46');for(let wy=265-h;wy<250;wy+=13)for(let wx=x+5;wx<x+25;wx+=10)if((wx+wy)%3)rect(wx,wy,4,5,'#53617b')}
- rect(0,250,W,250,'#182641');rect(0,453,W,47,'#253451');
- for(let x=0;x<W;x+=24){rect(x,470,12,3,'#53617b')}
- // pixel clouds
- for(let i=0;i<5;i++){let x=(i*83-(frame*.22)%420+420)%420-30,y=42+(i*37%100);rect(x,y,30,7,'#273954');rect(x+7,y-5,14,5,'#273954')}
- text('KÖZPÉNZ-IDŐJÁRÁS',12,22,10,'#7f91b3');
- text('★ '+Math.floor(money/100000)+' M',W-12,22,10,'#ffd166','right');
+let map,player,ghosts,coins,powerups,score,rep,lives,level,running,paused,won,frame,lastTime=0,moveTimer=0,flash=0;
+const dirs={up:{x:0,y:-1},down:{x:0,y:1},left:{x:-1,y:0},right:{x:1,y:0}};
+let wanted='left',moving='left';
+function build(){
+ map=raw.map((row,y)=>row.padEnd(COLS,'#').slice(0,COLS).split(''));
+ coins=[];powerups=[];ghosts=[];
+ for(let y=0;y<ROWS;y++)for(let x=0;x<COLS;x++){
+  const c=map[y][x];
+  if(c==='P'){player={x,y,px:x,py:y,face:'left',inv:0};map[y][x]=' '; }
+  if(c==='G'){ghosts.push({x,y,px:x,py:y,dir:'left',color:['#ff5268','#5ce7ff','#ff9b48'][ghosts.length%3],pause:Math.random()*20});map[y][x]=' ';}
+  if(c==='.'||c==='$'){coins.push({x,y,big:c==='$',got:false});map[y][x]=' ';}
+  if(c==='D'){map[y][x]='D';}
+ }
+ // More banknotes and satire tokens distributed in walkable corridors
+ for(let y=1;y<ROWS-1;y++)for(let x=1;x<COLS-1;x++){
+  if(map[y][x]===' '&&!(x===player.x&&y===player.y)&&!ghosts.some(g=>g.x===x&&g.y===y)&&!coins.some(c=>c.x===x&&c.y===y)){
+   if((x*7+y*11+level*3)%13===0)coins.push({x,y,big:(x+y+level)%9===0,got:false});
+   if((x*3+y*5+level)%37===0)powerups.push({x,y,got:false});
+  }
+ }
+}
+function open(x,y){return x>=0&&y>=0&&x<COLS&&y<ROWS&&map[y][x]!=='#';}
+function setHud(){document.getElementById('cash').textContent=score.toLocaleString('hu-HU')+' Ft';document.getElementById('rep').textContent=rep+'%';document.getElementById('lives').textContent='♥ '.repeat(Math.max(0,lives)).trim()||'—';document.getElementById('level').textContent=level+'. LABIRINTUS / 3';document.getElementById('country').textContent=level===1?'MAGYARORSZÁG':level===2?'A KIJÁRAT FELÉ':'DUBAJ FELÉ';}
+function moveEntity(e,dir){const d=dirs[dir];if(!d)return false;let nx=e.x+d.x,ny=e.y+d.y;if(!open(nx,ny))return false;e.x=nx;e.y=ny;return true;}
+function tryMove(){
+ if(moveEntity(player,wanted)){moving=wanted;player.face=wanted;}
+ else if(moveEntity(player,moving)){player.face=moving;}
+}
+function resetPlayer(){player.x=1;player.y=1;player.px=1;player.py=1;player.inv=80;ghosts.forEach((g,i)=>{g.x=i%2?17:9;g.y=i%2?17:9;g.px=g.x;g.py=g.y;});}
+function hitGhost(){
+ if(player.inv>0)return;
+ for(const g of ghosts)if(g.x===player.x&&g.y===player.y){lives--;rep=Math.max(0,rep-8);flash=18;resetPlayer();setHud();if(lives<=0)endGame(false);return;}
+}
+function update(){
+ if(!running||paused||won)return;
+ frame++;if(player.inv>0)player.inv--;
+ if(++moveTimer>=7){moveTimer=0;tryMove();
+  for(const c of coins)if(!c.got&&c.x===player.x&&c.y===player.y){c.got=true;score+=c.big?250000:50000;if(c.big)rep=Math.min(100,rep+3);}
+  for(const p of powerups)if(!p.got&&p.x===player.x&&p.y===player.y){p.got=true;score+=100000;rep=Math.min(100,rep+5);ghosts.forEach(g=>g.pause=50);}
+  for(const g of ghosts){
+   if(g.pause>0){g.pause--;continue;}
+   const opts=Object.keys(dirs).filter(d=>open(g.x+dirs[d].x,g.y+dirs[d].y));
+   if(!opts.length)continue;
+   // Mostly chase, but sometimes make a random turn so the maze stays playable.
+   let dir=g.dir;
+   if(Math.random()<.68){opts.sort((a,b)=>dist(g.x+dirs[a].x,g.y+dirs[a].y,player.x,player.y)-dist(g.x+dirs[b].x,g.y+dirs[b].y,player.x,player.y));dir=opts[0];}
+   else dir=opts[Math.floor(Math.random()*opts.length)];
+   if(!moveEntity(g,dir)){dir=opts[Math.floor(Math.random()*opts.length)];moveEntity(g,dir);}g.dir=dir;
+  }
+  hitGhost();
+  if(map[player.y][player.x]==='D'){if(level<3){level++;build();setHud();showMessage('ÚJ ÚTVONAL',level===2?'A pénz nyomában újabb folyosók nyílnak. A cél továbbra is a dubaji kijárat.':'Már látni a pálmafákat. Még egy utolsó labirintus, aztán jöhet a tengerpart.',true);}else endGame(true);}
+  setHud();
+ }
+ if(flash>0)flash--;
+}
+function dist(x,y,px,py){return Math.abs(x-px)+Math.abs(y-py);}
+function draw(){
+ ctx.clearRect(0,0,W,H);ctx.fillStyle='#050916';ctx.fillRect(0,0,W,H);
+ for(let y=0;y<ROWS;y++)for(let x=0;x<COLS;x++){
+  const px=x*TILE,py=y*TILE,c=map[y][x];
+  if(c==='#'){ctx.fillStyle='#101c48';ctx.fillRect(px,py,TILE,TILE);ctx.strokeStyle='#304c9a';ctx.lineWidth=1;ctx.strokeRect(px+2,py+2,TILE-4,TILE-4);ctx.fillStyle='#182858';ctx.fillRect(px+5,py+5,TILE-10,TILE-10);}
+  else if(c==='D'){ctx.fillStyle='#4b240c';ctx.fillRect(px+2,py+2,TILE-4,TILE-4);ctx.fillStyle='#ffca68';ctx.fillRect(px+5,py+4,TILE-10,TILE-7);ctx.fillStyle='#101326';ctx.fillRect(px+8,py+7,TILE-16,TILE-10);ctx.fillStyle='#fff1a3';ctx.fillRect(px+15,py+12,2,2);}
+ }
+ for(const c of coins)if(!c.got){const x=c.x*TILE+12,y=c.y*TILE+12;ctx.fillStyle=c.big?'#f8e25b':'#66ff9c';ctx.fillRect(x-5,y-3,10,7);ctx.fillStyle=c.big?'#fff6a3':'#c4ffd7';ctx.fillRect(x-3,y-1,6,3);ctx.fillStyle='#14351f';ctx.fillRect(x-1,y-2,2,5);}
+ for(const p of powerups)if(!p.got){ctx.fillStyle='#ff83d0';ctx.fillRect(p.x*TILE+6,p.y*TILE+6,12,12);ctx.fillStyle='#fff';ctx.font='bold 10px monospace';ctx.fillText('₿',p.x*TILE+7,p.y*TILE+16);}
+ ghosts.forEach(g=>drawGhost(g));
+ drawPlayer();
+ if(flash){ctx.fillStyle='#ff243a30';ctx.fillRect(0,0,W,H);}
 }
 function drawPlayer(){
- const x=player.x,y=player.y;
- // stylized pixel-art suit character
- rect(x+5,y+1,14,5,'#3b241e');rect(x+3,y+5,18,15,'#d5a077');rect(x+2,y+3,20,5,'#3b241e');
- rect(x+5,y+9,3,3,'#1b1c2c');rect(x+15,y+9,3,3,'#1b1c2c');rect(x+10,y+15,5,2,'#8b433b');
- rect(x+3,y+20,18,13,'#263d70');rect(x+9,y+20,6,9,'#f4f1e8');rect(x+11,y+21,3,6,'#c74a4a');
- rect(x,y+22,4,11,'#d5a077');rect(x+21,y+22,4,11,'#d5a077');
- rect(x+4,y+32,7,4,'#181b29');rect(x+15,y+32,7,4,'#181b29');
- rect(x+1,y+19,5,4,'#f2d36f');rect(x+18,y+19,5,4,'#f2d36f');
+ const x=player.x*TILE+12,y=player.y*TILE+12;
+ if(player.inv>0&&Math.floor(frame/4)%2===0)return;
+ // Yellow Pac-Man-style body with a caricatured older official's face and suit.
+ ctx.fillStyle='#ffcf4b';ctx.beginPath();ctx.arc(x,y,10,0,Math.PI*2);ctx.fill();
+ const mouth={right:[-.2,.2],left:[Math.PI-.2,Math.PI+.2],up:[-Math.PI/2-.2,-Math.PI/2+.2],down:[Math.PI/2-.2,Math.PI/2+.2]}[player.face]||[-.2,.2];
+ ctx.fillStyle='#050916';ctx.beginPath();ctx.moveTo(x,y);ctx.arc(x,y,11,mouth[0],mouth[1]);ctx.closePath();ctx.fill();
+ // Grey hair, glasses and tie: deliberately pixelated.
+ ctx.fillStyle='#d7d9df';ctx.fillRect(x-7,y-9,14,3);ctx.fillRect(x-8,y-6,3,3);ctx.fillRect(x+5,y-6,3,3);
+ ctx.fillStyle='#22243a';ctx.fillRect(x-5,y-3,4,3);ctx.fillRect(x+2,y-3,4,3);ctx.fillRect(x-1,y-2,3,1);
+ ctx.fillStyle='#e8e8f0';ctx.fillRect(x-4,y+4,8,4);ctx.fillStyle='#b62545';ctx.fillRect(x-1,y+4,3,5);
 }
-function drawItem(it){
- if(it.type==='cash'){rect(it.x,it.y,23,13,'#73f0b4');rect(it.x+2,it.y+2,19,9,'#267a5d');rect(it.x+9,it.y+4,5,5,'#baffd9');rect(it.x+3,it.y+4,3,2,'#baffd9');rect(it.x+17,it.y+7,3,2,'#baffd9')}
- else if(it.type==='scandal'){rect(it.x+5,it.y,13,17,'#ff647c');rect(it.x+1,it.y+4,21,9,'#ff647c');rect(it.x+8,it.y+4,3,3,'#571f39');rect(it.x+13,it.y+4,3,3,'#571f39');rect(it.x+9,it.y+11,6,2,'#571f39')}
- else {rect(it.x+7,it.y,10,18,'#ffd166');rect(it.x+3,it.y+5,18,8,'#ffd166');rect(it.x+9,it.y+5,3,3,'#fff3c0')}
+function drawGhost(g){
+ const x=g.x*TILE+12,y=g.y*TILE+12;
+ ctx.fillStyle=g.pause>0?'#a4adca':g.color;ctx.beginPath();ctx.arc(x,y-2,9,Math.PI,0);ctx.lineTo(x+9,y+8);ctx.lineTo(x+4,y+5);ctx.lineTo(x,y+9);ctx.lineTo(x-4,y+5);ctx.lineTo(x-9,y+8);ctx.closePath();ctx.fill();
+ ctx.fillStyle='#fff';ctx.fillRect(x-5,y-3,4,5);ctx.fillRect(x+2,y-3,4,5);ctx.fillStyle='#15172a';ctx.fillRect(x-3,y-1,2,3);ctx.fillRect(x+3,y-1,2,3);
 }
-function render(){
- drawScene();for(const it of items)drawItem(it);for(const p of particles)rect(p.x,p.y,3,3,p.c);drawPlayer();
- if(state==='playing'){text('KAPD EL A PÉNZT!',W/2,53,12,'#ffd166','center')}
+function showMessage(title,text,canResume=false){
+ running=false;document.getElementById('ovtitle').textContent=title;document.getElementById('ovtext').textContent=text;document.getElementById('start').textContent=canResume?'FOLYTATÁS':'ÚJRAKEZDÉS';document.getElementById('overlay').classList.remove('hidden');
+ document.getElementById('start').onclick=()=>{document.getElementById('overlay').classList.add('hidden');running=true;lastTime=performance.now();loop(lastTime);};
 }
-function start(){
- state='playing';money=0;rep=100;frame=0;spawn=0;speed=2.2;items=[];particles=[];player.x=W/2-player.w/2;player.y=426;activeQuestion=null;
- $('overlay').classList.add('hidden');updateStats();lastTime=performance.now();cancelAnimationFrame(raf);raf=requestAnimationFrame(loop);
+function endGame(success){
+ running=false;won=true;document.getElementById('ovtitle').textContent=success?'DUBAJ! A KIJÁRAT MEGVAN':'VÉGE A MENEKÜLÉSNEK';
+ document.getElementById('ovtext').textContent=success?'A karikatúra kijutott a labirintusból. Összegyűjtött pénz: '+score.toLocaleString('hu-HU')+' Ft. A játék véget ért — a valóság ennél jóval összetettebb.':'Elfogytak az életek. A labirintusban maradt a pénz egy része. Próbáld újra, és kerüld ki a kérdezősködőket!';
+ document.getElementById('start').textContent='ÚJ JÁTÉK';document.getElementById('start').onclick=()=>{score=0;rep=100;lives=3;level=1;won=false;paused=false;build();setHud();document.getElementById('overlay').classList.add('hidden');running=true;lastTime=performance.now();loop(lastTime);};
+ document.getElementById('overlay').classList.remove('hidden');
 }
-function updateStats(){$('money').textContent=fmt(money);$('rep').textContent=rep+'%';$('best').textContent=fmt(best)}
-function endGame(){state='over';keys.left=keys.right=false;const actions=$('modalActions');$('modalTitle').innerHTML='IRÁNY A<br>RÁCS MÖGÉ!';$('modalText').textContent='A hírnév elfogyott, az ügyészség kopogtat. Végső összeg: '+fmt(money)+'.';actions.innerHTML='<button class="btn" id="againBtn">ÚJRA PRÓBÁLOM</button>'+(money>=30000000?'<button class="btn secondary" id="bailBtn">ÓVADÉK LETÉTE — FOLYTATÁS</button>':'');$('overlay').classList.remove('hidden');$('againBtn').onclick=start;const bail=$('bailBtn');if(bail)bail.onclick=()=>{money=Math.max(0,money-30000000);rep=55;state='playing';$('overlay').classList.add('hidden');updateStats();lastTime=performance.now();raf=requestAnimationFrame(loop)}; }
-function showQuestion(){state='quiz';activeQuestion=questions[questionAt++%questions.length];const actions=$('modalActions');$('modalTitle').textContent='KÖZÉLETI GYORSTESZT';$('modalText').innerHTML='<span class="quiz-copy">'+activeQuestion[0]+'</span><br><br>Mi a hivatalos válasz?';actions.innerHTML='<button class="btn" id="goodBtn">JÓ, EZ ÍGY JÓ!</button><button class="btn danger" id="badBtn">EZ NEM JÓ…</button><div class="quiz-feedback" id="feedback"></div>';$('overlay').classList.remove('hidden');$('goodBtn').onclick=()=>answer(true);$('badBtn').onclick=()=>answer(false)}
-function answer(good){if(state!=='quiz')return; if(good){money+=250000;rep=Math.min(100,rep+2);$('feedback').textContent=activeQuestion[1]}else{rep-=18;$('feedback').textContent='Hiba! A hírnév csökkent.'}updateStats();setTimeout(()=>{if(rep<=0){endGame();return}state='playing';$('overlay').classList.add('hidden');lastTime=performance.now();raf=requestAnimationFrame(loop)},700)}
-function loop(now){if(state!=='playing')return;const dt=Math.min((now-lastTime)/16.67,2.3);lastTime=now;frame+=dt;spawn+=dt;
- if(keys.left)player.x-=3.8*dt;if(keys.right)player.x+=3.8*dt;player.x=Math.max(3,Math.min(W-player.w-3,player.x));
- if(spawn>Math.max(13,34-money/1800000)){spawn=0;const r=Math.random();items.push({x:rand(8,W-30),y:-20,type:r<.69?'cash':r<.88?'scandal':'bonus',v:speed+rand(0,1.5)})}
- for(let i=items.length-1;i>=0;i--){const it=items[i];it.y+=it.v*dt;if(it.y>H+20){items.splice(i,1);continue}if(it.x<player.x+player.w&&it.x+(it.type==='cash'?23:22)>player.x&&it.y<player.y+player.h&&it.y+(it.type==='cash'?13:18)>player.y){if(it.type==='cash'){money+=50000;for(let j=0;j<5;j++)particles.push({x:it.x+rand(0,20),y:it.y,c:'#73f0b4',v:rand(1,3),life:20})}else if(it.type==='bonus'){money+=150000;rep=Math.min(100,rep+3)}else{rep-=15;for(let j=0;j<6;j++)particles.push({x:it.x+rand(0,20),y:it.y,c:'#ff647c',v:rand(1,3),life:20})}items.splice(i,1);updateStats();if(rep<=0){endGame();return}}}
- for(let i=particles.length-1;i>=0;i--){const p=particles[i];p.y-=p.v*dt;p.life-=dt;if(p.life<=0)particles.splice(i,1)}
- speed=Math.min(5.5,2.2+money/18000000);
- if(frame>0&&Math.floor(frame)%900===0&&Math.floor(frame)!==Math.floor(frame-dt)){showQuestion();render();return}
- if(money>best){best=money;localStorage.setItem('matman-best',String(best));$('best').textContent=fmt(best)}
- render();raf=requestAnimationFrame(loop)}
-function showMenu(title,body,buttons){state='menu';$('modalTitle').innerHTML=title;$('modalText').textContent=body;$('modalActions').innerHTML=buttons;$('overlay').classList.remove('hidden');const b=$('startBtn');if(b)b.onclick=start}
-$('startBtn').onclick=start;
-$('howBtn').onclick=()=>showMenu('HOGYAN JÁTSSZ?','Kapd el a zöld bankjegyeket (+50 000 Ft), az arany bónuszokat (+150 000 Ft), és kerüld a piros botrányokat (−15% hírnév). Időnként közéleti villámkérdés jön. A „Jó” válasz pénzt ad. Ha eléred a 30 millió Ft-ot, a játék vége után óvadékkal visszatérhetsz.', '<button class="btn" id="startBtn">ÉRTEM, INDULJON!</button>');$('startBtn').onclick=start;
-function bind(id,key){const el=$(id);const down=e=>{e.preventDefault();keys[key]=true;el.classList.add('active')},up=e=>{e.preventDefault();keys[key]=false;el.classList.remove('active')};el.addEventListener('pointerdown',down);['pointerup','pointercancel','pointerleave'].forEach(ev=>el.addEventListener(ev,up))}
-bind('left','left');bind('right','right');$('jump').addEventListener('click',()=>{if(state==='playing'){rep=Math.min(100,rep+1);updateStats()}});
-window.addEventListener('keydown',e=>{if(['ArrowLeft','a','A'].includes(e.key)){keys.left=true;e.preventDefault()}if(['ArrowRight','d','D'].includes(e.key)){keys.right=true;e.preventDefault()}if((e.key===' '||e.key==='Enter')&&state==='menu'){start()}});
-window.addEventListener('keyup',e=>{if(['ArrowLeft','a','A'].includes(e.key))keys.left=false;if(['ArrowRight','d','D'].includes(e.key))keys.right=false});
-document.addEventListener('visibilitychange',()=>{if(document.hidden){keys.left=keys.right=false}else if(state==='playing'){lastTime=performance.now();cancelAnimationFrame(raf);raf=requestAnimationFrame(loop)}});
-render();
+function loop(t){if(!running)return;const dt=Math.min(40,t-lastTime||16);lastTime=t; // fixed logical pacing, independent of screen refresh
+ update();draw();if(running)requestAnimationFrame(loop);}
+function start(){score=0;rep=100;lives=3;level=1;won=false;paused=false;build();setHud();running=true;document.getElementById('overlay').classList.add('hidden');document.getElementById('start').onclick=null;lastTime=performance.now();requestAnimationFrame(loop);}
+document.getElementById('start').addEventListener('click',()=>{if(!running||won)start();});
+document.getElementById('pause').addEventListener('click',()=>{if(!running)return;paused=!paused;document.getElementById('pause').innerHTML=paused?'FOLYTAT<br>▶':'SZÜNET<br>Ⅱ';if(!paused){lastTime=performance.now();requestAnimationFrame(loop);}else showMessage('SZÜNET','A menekülés megállt. Ha készen állsz, folytasd.',true);});
+document.querySelectorAll('[data-dir]').forEach(b=>{const d=b.dataset.dir;b.addEventListener('pointerdown',e=>{e.preventDefault();wanted=d;},{passive:false});});
+window.addEventListener('keydown',e=>{const k=e.key.toLowerCase();const mapKey={arrowup:'up',w:'up',arrowdown:'down',s:'down',arrowleft:'left',a:'left',arrowright:'right',d:'right'};if(mapKey[k]){e.preventDefault();wanted=mapKey[k];}if(k===' '){e.preventDefault();if(running){paused=!paused;if(!paused){lastTime=performance.now();requestAnimationFrame(loop);}else showMessage('SZÜNET','Nyomd meg a Folytatás gombot, amikor készen állsz.',true);}}});
+build();setHud();draw();
 })();
-</script>
-</body>
-</html>
+</script></body></html>
