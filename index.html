@@ -75,11 +75,14 @@ function start(){reset();active=true;paused=false;over=false;document.getElement
 function loop(now){if(!active||paused)return;let dt=Math.min(45,now-last);last=now;acc+=dt;while(acc>=stepMs){acc-=stepMs;tick();if(!active)break;}for(let i=particles.length-1;i>=0;i--){let p=particles[i];p.x+=p.vx;p.y+=p.vy;p.vy+=.1;p.life--;if(p.life<=0)particles.splice(i,1);}for(let i=floating.length-1;i>=0;i--){let p=floating[i];p.y-=.55;p.life--;if(p.life<=0)floating.splice(i,1);}draw();if(active)requestAnimationFrame(loop);}
 document.getElementById('start').onclick=start;
 document.getElementById('pause').onclick=()=>{if(over)return;if(!active&&!paused)return;paused=!paused;if(paused){active=false;show('SZÜNET 🧃','MatMan szusszan egyet és megszámolja a zsebeit.','FOLYTATÁS ▶');document.getElementById('start').onclick=()=>{document.getElementById('overlay').classList.add('hidden');paused=false;active=true;document.getElementById('start').onclick=start;last=performance.now();requestAnimationFrame(loop);};}else{active=true;last=performance.now();requestAnimationFrame(loop);}};
-function setDirection(d){if(DIR[d]){desired=d;turnBuffer=2;}}
+function setDirection(d){if(DIR[d]){desired=d;facing=d;player.face=d;turnBuffer=0;if(!active&&!paused&&!over){return;}}}
 document.querySelectorAll('[data-dir]').forEach(b=>{
  b.addEventListener('pointerdown',e=>{e.preventDefault();setDirection(b.dataset.dir);},{passive:false});
  b.addEventListener('click',e=>{e.preventDefault();setDirection(b.dataset.dir);});
+ b.addEventListener('contextmenu',e=>e.preventDefault());
 });
+window.addEventListener('pointerup',()=>{});
+
 window.addEventListener('keydown',e=>{let k=e.key.toLowerCase();if(KEY[k]){e.preventDefault();setDirection(KEY[k]);}if((k===' '||k==='escape')&&active){e.preventDefault();document.getElementById('pause').click();}});
 reset();draw();
 })();</script></body></html>
