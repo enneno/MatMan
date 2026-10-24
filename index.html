@@ -2,155 +2,78 @@
 <html lang="hu">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
-<meta name="theme-color" content="#080d22">
-<meta name="description" content="Matolcsy menekülőútja — politikai szatíra pixel-art labirintusjáték. Gyűjtsd a pénzt Magyarországtól Dubajig!">
-<title>MATOLCSY: MENEKÜLŐÚT DUBAJBA</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#17112c">
+<meta name="description" content="MatMan — vicces, pixeles labirintusjáték. Gyűjtsd össze az összes pénzt, és találd meg a kijáratot!">
+<title>MatMan — a nagy pénzvadászat</title>
 <style>
-:root{color-scheme:dark;--bg:#080d22;--panel:#111a36;--line:#293966;--gold:#ffda4a;--cyan:#50e6ff;--red:#ff5268;--green:#6eff9a}
-*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:radial-gradient(ellipse at top,#17234a 0,#080d22 65%);color:#f5f7ff;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}body{padding:12px;display:flex;justify-content:center}.app{width:min(100%,760px)}header{text-align:center;margin:4px 0 12px}h1{font-size:clamp(20px,4.7vw,34px);line-height:1.12;letter-spacing:1px;margin:5px 0;color:var(--gold);text-shadow:3px 3px #8b351e} .sub{font-size:11px;color:#aab8e5;letter-spacing:2px}.hud{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:8px}.stat{border:1px solid var(--line);background:#111a36;border-radius:8px;padding:8px 10px;min-width:0}.stat label{display:block;font-size:9px;color:#92a5d8;letter-spacing:1px;margin-bottom:4px}.stat strong{font-size:clamp(13px,3vw,19px);color:#fff;white-space:nowrap}.stat.money strong{color:var(--green)}.stage{display:flex;justify-content:space-between;gap:8px;align-items:center;margin:0 2px 7px;font-size:10px;color:#b6c5ee}.stage b{color:var(--cyan)}.board{position:relative;border:2px solid #334a88;background:#050916;border-radius:10px;overflow:hidden;box-shadow:0 0 0 4px #0b122b,0 15px 45px #0008}canvas{display:block;width:100%;height:auto;image-rendering:pixelated;touch-action:none}.overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:#050916e8;padding:20px;text-align:center}.overlay.hidden{display:none}.dialog{max-width:420px}.dialog h2{color:var(--gold);font-size:clamp(20px,5vw,30px);margin:0 0 12px}.dialog p{font-size:12px;line-height:1.7;color:#d2daf5}.btn{font:inherit;font-weight:900;border:0;border-radius:7px;padding:13px 18px;background:var(--gold);color:#171326;cursor:pointer;box-shadow:0 4px #9c6727}.btn:active{transform:translateY(2px);box-shadow:0 2px #9c6727}.hint{font-size:10px!important;color:#92a5d8!important}.controls{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;max-width:320px;margin:12px auto 8px;touch-action:manipulation}.pad{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;grid-column:1/3}.control{height:47px;border:1px solid #344878;background:#111a36;color:#f5f7ff;border-radius:9px;font-size:20px;font-weight:bold;touch-action:manipulation;user-select:none;-webkit-user-select:none}.control:active{background:#253760}.blank{visibility:hidden}.action{font-size:11px;line-height:1.4;color:var(--gold)}.foot{text-align:center;color:#6678a8;font-size:9px;line-height:1.6;margin:8px auto 0;max-width:560px}.tag{display:inline-block;border:1px solid #664f33;border-radius:4px;padding:3px 6px;color:#ffcf83;font-size:9px;margin-bottom:7px}
-@media(min-width:600px){body{padding:20px}.controls{margin-top:14px}.control{height:42px}}
+:root{color-scheme:dark;--bg:#17112c;--panel:#241b42;--line:#49396d;--gold:#ffdb62;--mint:#82ffd1;--pink:#ff79a9;--ink:#fff8e9}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:radial-gradient(ellipse at 50% 0,#3b2861 0,#17112c 66%);color:var(--ink);font-family:ui-rounded,"Trebuchet MS",system-ui,sans-serif}body{padding:14px;display:flex;justify-content:center}.app{width:min(100%,560px)}header{text-align:center;margin:5px 0 14px}h1{font-size:clamp(35px,9vw,54px);letter-spacing:2px;line-height:1;margin:4px 0;color:var(--gold);text-shadow:0 4px 0 #a64c78,0 7px 0 #492d64}.subtitle{margin-top:12px;color:#d8c8ff;font-size:12px;letter-spacing:2px;font-weight:800}.hud{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:8px;margin-bottom:10px}.stat{border:2px solid var(--line);background:linear-gradient(145deg,#30234f,#211a3c);border-radius:15px;padding:10px 12px;box-shadow:0 4px 0 #0e0b1c;min-width:0}.stat label{display:block;font-size:10px;color:#c1b0eb;font-weight:900;letter-spacing:1px;margin-bottom:4px}.stat strong{font-size:clamp(15px,4vw,21px);white-space:nowrap}.money strong{color:var(--mint)}.progress{height:8px;background:#100d20;border-radius:99px;margin:0 0 10px;overflow:hidden;border:1px solid #4a3968}.progress span{display:block;width:0;height:100%;background:linear-gradient(90deg,#82ffd1,#ffdb62);border-radius:99px;transition:width .15s}.board{position:relative;border:3px solid #6c5599;background:#100d20;border-radius:17px;overflow:hidden;box-shadow:0 7px 0 #0d0919,0 16px 40px #08051080}canvas{display:block;width:100%;height:auto;image-rendering:pixelated;touch-action:none}.overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:#17112ceF;padding:20px;text-align:center}.overlay.hidden{display:none}.dialog{max-width:360px}.sticker{display:inline-block;background:var(--pink);color:#34132c;font-size:10px;font-weight:1000;letter-spacing:1px;padding:6px 10px;border-radius:99px;transform:rotate(-3deg);margin-bottom:10px}.dialog h2{color:var(--gold);font-size:clamp(25px,7vw,36px);line-height:1.05;margin:0 0 12px}.dialog p{font-size:14px;line-height:1.55;color:#e4dcf8}.btn{font:inherit;font-weight:1000;border:0;border-radius:12px;padding:14px 19px;background:var(--gold);color:#251638;cursor:pointer;box-shadow:0 5px 0 #b36c58;transition:transform .12s,box-shadow .12s}.btn:active{transform:translateY(3px);box-shadow:0 2px 0 #b36c58}.hint{font-size:11px!important;color:#c1b0eb!important}.controls{display:grid;grid-template-columns:1fr 1fr 1fr;gap:9px;max-width:330px;margin:15px auto 8px;touch-action:manipulation}.pad{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;grid-column:1/3}.control{height:49px;border:2px solid #59447f;background:linear-gradient(145deg,#332650,#241b42);color:var(--ink);border-radius:13px;font-size:21px;font-weight:1000;box-shadow:0 4px 0 #100b1f;touch-action:manipulation;user-select:none;-webkit-user-select:none}.control:active{transform:translateY(2px);box-shadow:0 2px 0 #100b1f;background:#493465}.blank{visibility:hidden}.action{font-size:12px;line-height:1.4;color:var(--gold)}.foot{text-align:center;color:#a99bc8;font-size:10px;line-height:1.5;margin:10px auto 0}.tip{text-align:center;color:#c8b8e9;font-size:11px;margin:10px 0 0;font-weight:700}@media(min-width:500px){body{padding:22px}.control{height:45px}}
 </style>
 </head>
 <body><main class="app">
-<header><div class="sub">EGY KÉPZELETBELI POLITIKAI ARCADE</div><h1>MATOLCSY: MENEKÜLŐÚT DUBAJBA</h1><div class="sub">MAGYARORSZÁG → PÉNZ → DUBAJ</div></header>
-<section class="hud"><div class="stat money"><label>ÖSSZEGYŰJTÖTT PÉNZ</label><strong id="cash">0 Ft</strong></div><div class="stat"><label>HÍRNÉV</label><strong id="rep">100%</strong></div><div class="stat"><label>ÉLETEK</label><strong id="lives">♥ ♥ ♥</strong></div></section>
-<div class="stage"><span>KIINDULÓPONT: <b id="country">MAGYARORSZÁG</b></span><span id="level">1. LABIRINTUS / 3</span></div>
-<div class="board"><canvas id="game" width="456" height="504" aria-label="Pixel art labirintusjáték"></canvas><div class="overlay" id="overlay"><div class="dialog"><div class="tag">SZATÍRA • NEM VALÓS ESEMÉNY</div><h2 id="ovtitle">A nagy pénzmenekítés</h2><p id="ovtext">Matolcsy karikatúrájaként járd be a labirintust! Szedd össze a szétszórt bankjegyeket, kerüld a kellemetlen kérdéseket és a felügyelőket, majd juss el a dubaji kijáratig.</p><p class="hint">Irányítás: nyilak / WASD vagy a lenti gombok. A nagy bankjegyek bónuszt adnak.</p><button class="btn" id="start">INDULJON A MENEKÜLÉS</button></div></div></div>
+<header><h1>MatMan</h1><div class="subtitle">💸 A NAGY PÉNZVADÁSZAT 💸</div></header>
+<section class="hud"><div class="stat money"><label>BEZSEBELT ZSÁKMÁNY</label><strong id="cash">0 Ft</strong></div><div class="stat"><label>PÉNZEK</label><strong id="count">0 / 0</strong></div><div class="stat"><label>ÉLETEK</label><strong id="lives">♥ ♥ ♥</strong></div></section>
+<div class="progress"><span id="bar"></span></div>
+<div class="board"><canvas id="game" width="480" height="480" aria-label="MatMan pixeles labirintusjáték"></canvas><div class="overlay" id="overlay"><div class="dialog"><div class="sticker">TELJESEN KOMOLYTALAN JÁTÉK</div><h2 id="ovtitle">Pénz! Pénz! Pénz!</h2><p id="ovtext">MatMan eltévedt a labirintusban, de valahogy minden sarokban pénz hever. Szedd fel az összeset, kerüld a morcos kis mumusokat, és csak AZUTÁN nyílik ki a kijárat!</p><p class="hint">Mozgás: WASD / nyilak vagy az alsó gombok. A nagy arany zsák extra pontot ér!</p><button class="btn" id="start">INDULJ, MATMAN! ✨</button></div></div></div>
 <div class="controls"><div class="pad"><button class="control blank" tabindex="-1">·</button><button class="control" data-dir="up" aria-label="Fel">▲</button><button class="control blank" tabindex="-1">·</button><button class="control" data-dir="left" aria-label="Balra">◀</button><button class="control" data-dir="down" aria-label="Le">▼</button><button class="control" data-dir="right" aria-label="Jobbra">▶</button></div><button class="control action" id="pause">SZÜNET<br>Ⅱ</button></div>
-<div class="foot">FIKCIÓS POLITIKAI PARÓDIA. A szereplő karikatúra, a játékmenet kitalált. A játék nem állít konkrét bűncselekményt tényként.</div>
+<div class="tip" id="tip">Gyűjtsd be az összes bankjegyet! A kijárat addig rejtve marad. 🕵️</div>
+<div class="foot">Egy kis pixeles hülyéskedés — semmi sem komoly. 😎</div>
 </main>
 <script>
-(()=>{
-'use strict';
-const canvas=document.getElementById('game'),ctx=canvas.getContext('2d');
-const TILE=24,COLS=19,ROWS=21,W=COLS*TILE,H=ROWS*TILE;
-const raw=[
-"###################",
-"#P....#.....#....$#",
-"#.##..#.###.#.##..#",
-"#....##...#...##..#",
-"###.####.#.####.###",
-"#...#....#....#...#",
-"#.###.##...##.###.#",
-"#.....#.....#.....#",
-"#####.#.###.#.#####",
-"#.....#..G..#.....#",
-"#.###.##...##.###.#",
-"#...#....#....#...#",
-"###.####.#.####.###",
-"#....##...#...##..#",
-"#.##..#.###.#.##..#",
-"#....#.....#......#",
-"##.#.#.###.#.###.##",
-"#..#...#...#...#..#",
-"#.####.#.#.####.#.#",
-"#...............D.#",
-"###################"
+(()=>{'use strict';
+const canvas=document.getElementById('game'),ctx=canvas.getContext('2d'),T=32,N=15,S=480;
+const layout=[
+"###############",
+"#P....#.......#",
+"#.##..#.###.#..#",
+"#....##...#....#",
+"###.####.#.###.#",
+"#...#....#.....#",
+"#.###.##...##..#",
+"#.....#...#....#",
+"#####.#.###.####",
+"#.....#.....#..#",
+"#.###.##.##.#..#",
+"#...#....#.....#",
+"###.####.#.###.#",
+"#.............D#",
+"###############"
 ];
-let map,player,ghosts,coins,powerups,score,rep,lives,level,running,paused,won,frame,lastTime=0,moveTimer=0,flash=0;
 const dirs={up:{x:0,y:-1},down:{x:0,y:1},left:{x:-1,y:0},right:{x:1,y:0}};
-let wanted='left',moving='left';
-function build(){
- map=raw.map((row,y)=>row.padEnd(COLS,'#').slice(0,COLS).split(''));
- coins=[];powerups=[];ghosts=[];
- for(let y=0;y<ROWS;y++)for(let x=0;x<COLS;x++){
-  const c=map[y][x];
-  if(c==='P'){player={x,y,px:x,py:y,face:'left',inv:0};map[y][x]=' '; }
-  if(c==='G'){ghosts.push({x,y,px:x,py:y,dir:'left',color:['#ff5268','#5ce7ff','#ff9b48'][ghosts.length%3],pause:Math.random()*20});map[y][x]=' ';}
-  if(c==='.'||c==='$'){coins.push({x,y,big:c==='$',got:false});map[y][x]=' ';}
-  if(c==='D'){map[y][x]='D';}
- }
- // More banknotes and satire tokens distributed in walkable corridors
- for(let y=1;y<ROWS-1;y++)for(let x=1;x<COLS-1;x++){
-  if(map[y][x]===' '&&!(x===player.x&&y===player.y)&&!ghosts.some(g=>g.x===x&&g.y===y)&&!coins.some(c=>c.x===x&&c.y===y)){
-   if((x*7+y*11+level*3)%13===0)coins.push({x,y,big:(x+y+level)%9===0,got:false});
-   if((x*3+y*5+level)%37===0)powerups.push({x,y,got:false});
-  }
- }
-}
-function open(x,y){return x>=0&&y>=0&&x<COLS&&y<ROWS&&map[y][x]!=='#';}
-function setHud(){document.getElementById('cash').textContent=score.toLocaleString('hu-HU')+' Ft';document.getElementById('rep').textContent=rep+'%';document.getElementById('lives').textContent='♥ '.repeat(Math.max(0,lives)).trim()||'—';document.getElementById('level').textContent=level+'. LABIRINTUS / 3';document.getElementById('country').textContent=level===1?'MAGYARORSZÁG':level===2?'A KIJÁRAT FELÉ':'DUBAJ FELÉ';}
-function moveEntity(e,dir){const d=dirs[dir];if(!d)return false;let nx=e.x+d.x,ny=e.y+d.y;if(!open(nx,ny))return false;e.x=nx;e.y=ny;return true;}
-function tryMove(){
- if(moveEntity(player,wanted)){moving=wanted;player.face=wanted;}
- else if(moveEntity(player,moving)){player.face=moving;}
-}
-function resetPlayer(){player.x=1;player.y=1;player.px=1;player.py=1;player.inv=80;ghosts.forEach((g,i)=>{g.x=i%2?17:9;g.y=i%2?17:9;g.px=g.x;g.py=g.y;});}
-function hitGhost(){
- if(player.inv>0)return;
- for(const g of ghosts)if(g.x===player.x&&g.y===player.y){lives--;rep=Math.max(0,rep-8);flash=18;resetPlayer();setHud();if(lives<=0)endGame(false);return;}
-}
-function update(){
- if(!running||paused||won)return;
- frame++;if(player.inv>0)player.inv--;
- if(++moveTimer>=7){moveTimer=0;tryMove();
-  for(const c of coins)if(!c.got&&c.x===player.x&&c.y===player.y){c.got=true;score+=c.big?250000:50000;if(c.big)rep=Math.min(100,rep+3);}
-  for(const p of powerups)if(!p.got&&p.x===player.x&&p.y===player.y){p.got=true;score+=100000;rep=Math.min(100,rep+5);ghosts.forEach(g=>g.pause=50);}
-  for(const g of ghosts){
-   if(g.pause>0){g.pause--;continue;}
-   const opts=Object.keys(dirs).filter(d=>open(g.x+dirs[d].x,g.y+dirs[d].y));
-   if(!opts.length)continue;
-   // Mostly chase, but sometimes make a random turn so the maze stays playable.
-   let dir=g.dir;
-   if(Math.random()<.68){opts.sort((a,b)=>dist(g.x+dirs[a].x,g.y+dirs[a].y,player.x,player.y)-dist(g.x+dirs[b].x,g.y+dirs[b].y,player.x,player.y));dir=opts[0];}
-   else dir=opts[Math.floor(Math.random()*opts.length)];
-   if(!moveEntity(g,dir)){dir=opts[Math.floor(Math.random()*opts.length)];moveEntity(g,dir);}g.dir=dir;
-  }
-  hitGhost();
-  if(map[player.y][player.x]==='D'){if(level<3){level++;build();setHud();showMessage('ÚJ ÚTVONAL',level===2?'A pénz nyomában újabb folyosók nyílnak. A cél továbbra is a dubaji kijárat.':'Már látni a pálmafákat. Még egy utolsó labirintus, aztán jöhet a tengerpart.',true);}else endGame(true);}
-  setHud();
- }
- if(flash>0)flash--;
-}
-function dist(x,y,px,py){return Math.abs(x-px)+Math.abs(y-py);}
-function draw(){
- ctx.clearRect(0,0,W,H);ctx.fillStyle='#050916';ctx.fillRect(0,0,W,H);
- for(let y=0;y<ROWS;y++)for(let x=0;x<COLS;x++){
-  const px=x*TILE,py=y*TILE,c=map[y][x];
-  if(c==='#'){ctx.fillStyle='#101c48';ctx.fillRect(px,py,TILE,TILE);ctx.strokeStyle='#304c9a';ctx.lineWidth=1;ctx.strokeRect(px+2,py+2,TILE-4,TILE-4);ctx.fillStyle='#182858';ctx.fillRect(px+5,py+5,TILE-10,TILE-10);}
-  else if(c==='D'){ctx.fillStyle='#4b240c';ctx.fillRect(px+2,py+2,TILE-4,TILE-4);ctx.fillStyle='#ffca68';ctx.fillRect(px+5,py+4,TILE-10,TILE-7);ctx.fillStyle='#101326';ctx.fillRect(px+8,py+7,TILE-16,TILE-10);ctx.fillStyle='#fff1a3';ctx.fillRect(px+15,py+12,2,2);}
- }
- for(const c of coins)if(!c.got){const x=c.x*TILE+12,y=c.y*TILE+12;ctx.fillStyle=c.big?'#f8e25b':'#66ff9c';ctx.fillRect(x-5,y-3,10,7);ctx.fillStyle=c.big?'#fff6a3':'#c4ffd7';ctx.fillRect(x-3,y-1,6,3);ctx.fillStyle='#14351f';ctx.fillRect(x-1,y-2,2,5);}
- for(const p of powerups)if(!p.got){ctx.fillStyle='#ff83d0';ctx.fillRect(p.x*TILE+6,p.y*TILE+6,12,12);ctx.fillStyle='#fff';ctx.font='bold 10px monospace';ctx.fillText('₿',p.x*TILE+7,p.y*TILE+16);}
- ghosts.forEach(g=>drawGhost(g));
- drawPlayer();
- if(flash){ctx.fillStyle='#ff243a30';ctx.fillRect(0,0,W,H);}
-}
-function drawPlayer(){
- const x=player.x*TILE+12,y=player.y*TILE+12;
- if(player.inv>0&&Math.floor(frame/4)%2===0)return;
- // Yellow Pac-Man-style body with a caricatured older official's face and suit.
- ctx.fillStyle='#ffcf4b';ctx.beginPath();ctx.arc(x,y,10,0,Math.PI*2);ctx.fill();
- const mouth={right:[-.2,.2],left:[Math.PI-.2,Math.PI+.2],up:[-Math.PI/2-.2,-Math.PI/2+.2],down:[Math.PI/2-.2,Math.PI/2+.2]}[player.face]||[-.2,.2];
- ctx.fillStyle='#050916';ctx.beginPath();ctx.moveTo(x,y);ctx.arc(x,y,11,mouth[0],mouth[1]);ctx.closePath();ctx.fill();
- // Grey hair, glasses and tie: deliberately pixelated.
- ctx.fillStyle='#d7d9df';ctx.fillRect(x-7,y-9,14,3);ctx.fillRect(x-8,y-6,3,3);ctx.fillRect(x+5,y-6,3,3);
- ctx.fillStyle='#22243a';ctx.fillRect(x-5,y-3,4,3);ctx.fillRect(x+2,y-3,4,3);ctx.fillRect(x-1,y-2,3,1);
- ctx.fillStyle='#e8e8f0';ctx.fillRect(x-4,y+4,8,4);ctx.fillStyle='#b62545';ctx.fillRect(x-1,y+4,3,5);
-}
-function drawGhost(g){
- const x=g.x*TILE+12,y=g.y*TILE+12;
- ctx.fillStyle=g.pause>0?'#a4adca':g.color;ctx.beginPath();ctx.arc(x,y-2,9,Math.PI,0);ctx.lineTo(x+9,y+8);ctx.lineTo(x+4,y+5);ctx.lineTo(x,y+9);ctx.lineTo(x-4,y+5);ctx.lineTo(x-9,y+8);ctx.closePath();ctx.fill();
- ctx.fillStyle='#fff';ctx.fillRect(x-5,y-3,4,5);ctx.fillRect(x+2,y-3,4,5);ctx.fillStyle='#15172a';ctx.fillRect(x-3,y-1,2,3);ctx.fillRect(x+3,y-1,2,3);
-}
-function showMessage(title,text,canResume=false){
- running=false;document.getElementById('ovtitle').textContent=title;document.getElementById('ovtext').textContent=text;document.getElementById('start').textContent=canResume?'FOLYTATÁS':'ÚJRAKEZDÉS';document.getElementById('overlay').classList.remove('hidden');
- document.getElementById('start').onclick=()=>{document.getElementById('overlay').classList.add('hidden');paused=false;document.getElementById('pause').innerHTML='SZÜNET<br>Ⅱ';running=true;lastTime=performance.now();loop(lastTime);};
-}
-function endGame(success){
- running=false;won=true;document.getElementById('ovtitle').textContent=success?'DUBAJ! A KIJÁRAT MEGVAN':'VÉGE A MENEKÜLÉSNEK';
- document.getElementById('ovtext').textContent=success?'A karikatúra kijutott a labirintusból. Összegyűjtött pénz: '+score.toLocaleString('hu-HU')+' Ft. A játék véget ért — a valóság ennél jóval összetettebb.':'Elfogytak az életek. A labirintusban maradt a pénz egy része. Próbáld újra, és kerüld ki a kérdezősködőket!';
- document.getElementById('start').textContent='ÚJ JÁTÉK';document.getElementById('start').onclick=()=>{score=0;rep=100;lives=3;level=1;won=false;paused=false;build();setHud();document.getElementById('overlay').classList.add('hidden');running=true;lastTime=performance.now();loop(lastTime);};
- document.getElementById('overlay').classList.remove('hidden');
-}
-function loop(t){if(!running)return;const dt=Math.min(40,t-lastTime||16);lastTime=t; // fixed logical pacing, independent of screen refresh
- update();draw();if(running)requestAnimationFrame(loop);}
-function start(){score=0;rep=100;lives=3;level=1;won=false;paused=false;build();setHud();running=true;document.getElementById('overlay').classList.add('hidden');document.getElementById('start').onclick=null;lastTime=performance.now();requestAnimationFrame(loop);}
+let walls,player,foes,money,score,lives,frame=0,active=false,paused=false,ended=false,won=false,last=0,acc=0,stepMs=112,wanted='left',facing='left',messageTimer=0;
+function init(){walls=layout.map(r=>r.padEnd(N,'#').slice(0,N).split(''));money=[];foes=[];player={x:1,y:1,fx:1,fy:1,fromX:1,fromY:1,face:'right',inv:0};for(let y=0;y<N;y++)for(let x=0;x<N;x++){let c=walls[y][x];if(c==='P'){player.x=x;player.y=y;player.fx=x;player.fy=y;player.fromX=x;player.fromY=y;walls[y][x]=' ';}else if(c==='D'){walls[y][x]='D';}else if(c==='.'||c==='$'){money.push({x,y,big:c==='$',got:false});walls[y][x]=' ';}}
+for(let y=1;y<N-1;y++)for(let x=1;x<N-1;x++){if(walls[y][x]===' '&&!(x===player.x&&y===player.y)&&!money.some(m=>m.x===x&&m.y===y)&&((x*7+y*11)%7===0))money.push({x,y,big:(x+y)%9===0,got:false});}
+foes=[{x:7,y:5,fx:7,fy:5,fromX:7,fromY:5,dir:'left',color:'#ff79a9',wait:0},{x:11,y:11,fx:11,fy:11,fromX:11,fromY:11,dir:'up',color:'#79d8ff',wait:8}];score=0;lives=3;frame=0;acc=0;wanted='right';facing='right';ended=false;won=false;active=false;paused=false;updateHud();draw();}
+function open(x,y){return x>=0&&y>=0&&x<N&&y<N&&walls[y][x]!=='#'&&walls[y][x]!=='D';}
+function move(e,d){const v=dirs[d];if(!v)return false;const x=e.x+v.x,y=e.y+v.y;if(!open(x,y))return false;e.fromX=e.x;e.fromY=e.y;e.x=x;e.y=y;e.fx=e.fromX;e.fy=e.fromY;return true;}
+function updateHud(){let got=money.filter(m=>m.got).length,total=money.length;document.getElementById('cash').textContent=score.toLocaleString('hu-HU')+' Ft';document.getElementById('count').textContent=got+' / '+total;document.getElementById('lives').textContent=lives>0?'♥ '.repeat(lives).trim():'—';document.getElementById('bar').style.width=(total?got/total*100:0)+'%';document.getElementById('tip').textContent=got===total?'🎉 Minden pénz megvan! Keresd a villogó kijáratot!':'Gyűjtsd be az összes bankjegyet! A kijárat addig rejtve marad. 🕵️';}
+function step(){if(!active||paused||ended)return;frame++;if(player.inv>0)player.inv--;if(move(player,wanted)){facing=wanted;}else if(move(player,facing)){}player.face=facing;
+for(const m of money)if(!m.got&&m.x===player.x&&m.y===player.y){m.got=true;score+=m.big?500000:100000;}
+for(const f of foes){if(f.wait>0){f.wait--;continue;}const options=Object.keys(dirs).filter(d=>open(f.x+dirs[d].x,f.y+dirs[d].y));if(!options.length)continue;let d=f.dir;if(Math.random()<.72){options.sort((a,b)=>dist(f.x+dirs[a].x,f.y+dirs[a].y,player.x,player.y)-dist(f.x+dirs[b].x,f.y+dirs[b].y,player.x,player.y));d=options[0];}else d=options[Math.floor(Math.random()*options.length)];if(!move(f,d)){d=options[Math.floor(Math.random()*options.length)];move(f,d);}f.dir=d;}
+for(const f of foes)if(f.x===player.x&&f.y===player.y&&player.inv===0){lives--;player.x=1;player.y=1;player.fromX=player.x;player.fromY=player.y;player.inv=18;f.x=f===foes[0]?7:11;f.y=f===foes[0]?5:11;f.fromX=f.x;f.fromY=f.y;if(lives<=0){finish(false);return;}}
+if(money.every(m=>m.got)&&player.x===13&&player.y===13)finish(true);updateHud();}
+function dist(x,y,a,b){return Math.abs(x-a)+Math.abs(y-b);}
+function interp(e){return {x:e.fromX+(e.x-e.fromX)*Math.min(1,acc/stepMs),y:e.fromY+(e.y-e.fromY)*Math.min(1,acc/stepMs)};}
+function rounded(x,y,w,h,r,color){ctx.fillStyle=color;ctx.beginPath();ctx.roundRect(x,y,w,h,r);ctx.fill();}
+function draw(){ctx.clearRect(0,0,S,S);ctx.fillStyle='#100d20';ctx.fillRect(0,0,S,S);
+for(let y=0;y<N;y++)for(let x=0;x<N;x++){let c=walls[y][x],px=x*T,py=y*T;if(c==='#'){rounded(px+1,py+1,30,30,7,'#29234e');ctx.fillStyle='#51407d';ctx.fillRect(px+5,py+5,22,3);ctx.fillStyle='#1d193a';ctx.fillRect(px+5,py+10,22,17);}else if(c==='D'&&money.every(m=>m.got)){ctx.save();ctx.shadowColor='#82ffd1';ctx.shadowBlur=18+Math.sin(frame*.18)*8;rounded(px+5,py+3,22,27,7,'#82ffd1');ctx.shadowBlur=0;ctx.fillStyle='#26334a';ctx.fillRect(px+10,py+10,12,16);ctx.fillStyle='#fff8e9';ctx.fillRect(px+17,py+17,3,3);ctx.restore();}}
+for(const m of money)if(!m.got){let x=m.x*T+16,y=m.y*T+16;ctx.save();ctx.translate(x,y);ctx.rotate(Math.sin(frame*.1+m.x)*.12);if(m.big){rounded(-10,-8,20,16,4,'#ffdb62');ctx.fillStyle='#a76b26';ctx.font='bold 11px system-ui';ctx.textAlign='center';ctx.fillText('$',0,4);}else{rounded(-7,-5,14,10,3,'#82ffd1');ctx.fillStyle='#29765d';ctx.fillRect(-2,-4,4,8);ctx.fillStyle='#dffff2';ctx.fillRect(-5,-3,2,6);}ctx.restore();}
+for(const f of foes)drawFoe(f);drawPlayer();}
+function drawPlayer(){if(player.inv>0&&Math.floor(frame/2)%2===0)return;let p=interp(player),x=p.x*T+16,y=p.y*T+16;ctx.save();ctx.translate(x,y);ctx.rotate(Math.sin(frame*.17)*.045);ctx.shadowColor='#ffdb62';ctx.shadowBlur=8;rounded(-12,-12,24,25,9,'#ffdb62');ctx.shadowBlur=0;
+ // Generic goofy pixel character: big hair tuft, expressive eyes, silly tie.
+ rounded(-11,-12,22,7,4,'#8c5c9d');ctx.fillStyle='#b98acb';ctx.fillRect(-8,-15,5,5);ctx.fillRect(3,-15,6,5);
+ ctx.fillStyle='#fff8e9';ctx.fillRect(-7,-4,6,7);ctx.fillRect(2,-4,6,7);ctx.fillStyle='#29234e';ctx.fillRect(-4,-2,3,4);ctx.fillRect(4,-2,3,4);
+ ctx.fillStyle='#ed8b78';ctx.fillRect(-2,4,5,3);ctx.fillStyle='#fff8e9';ctx.fillRect(-5,8,10,3);ctx.fillStyle='#ff79a9';ctx.fillRect(-2,8,5,8);ctx.fillStyle='#fff8e9';ctx.fillRect(-8,15,6,3);ctx.fillRect(3,15,6,3);
+ ctx.restore();}
+function drawFoe(f){let p=interp(f),x=p.x*T+16,y=p.y*T+16;ctx.save();ctx.translate(x,y);ctx.fillStyle=f.color;ctx.beginPath();ctx.moveTo(-12,10);ctx.lineTo(-12,-2);ctx.quadraticCurveTo(-12,-14,0,-14);ctx.quadraticCurveTo(12,-14,12,-2);ctx.lineTo(12,10);ctx.lineTo(6,6);ctx.lineTo(0,10);ctx.lineTo(-6,6);ctx.closePath();ctx.fill();ctx.fillStyle='#fff8e9';ctx.fillRect(-7,-4,5,6);ctx.fillRect(3,-4,5,6);ctx.fillStyle='#29234e';ctx.fillRect(-5,-2,2,3);ctx.fillRect(5,-2,2,3);ctx.fillStyle='#29234e';ctx.fillRect(-4,6,8,2);ctx.restore();}
+function show(title,text,button){document.getElementById('ovtitle').textContent=title;document.getElementById('ovtext').textContent=text;document.getElementById('start').textContent=button;document.getElementById('overlay').classList.remove('hidden');}
+function finish(success){active=false;ended=true;won=success;show(success?'PÉNZ PIPA, KIJÁRAT PIPA! 🎉':'Jaj ne, lebuktál! 😵',success?'MatMan begyűjtötte az összes pénzt és megtalálta a kijáratot. Zsákmány: '+score.toLocaleString('hu-HU')+' Ft. Megérdemel egy óriási szendvicset.': 'Elfogytak az életek, és a pénz egy része még mindig a labirintusban van. Még egy kör?', 'ÚJ JÁTÉK 🔄');}
+function start(){init();active=true;document.getElementById('overlay').classList.add('hidden');last=performance.now();requestAnimationFrame(loop);}
+function loop(now){if(!active||paused)return;let dt=Math.min(50,now-last);last=now;acc+=dt;while(acc>=stepMs){acc-=stepMs;step();if(!active)break;}draw();if(active)requestAnimationFrame(loop);}
 document.getElementById('start').onclick=start;
-document.getElementById('pause').addEventListener('click',()=>{if(!running)return;paused=!paused;document.getElementById('pause').innerHTML=paused?'FOLYTAT<br>▶':'SZÜNET<br>Ⅱ';if(!paused){lastTime=performance.now();requestAnimationFrame(loop);}else showMessage('SZÜNET','A menekülés megállt. Ha készen állsz, folytasd.',true);});
-document.querySelectorAll('[data-dir]').forEach(b=>{const d=b.dataset.dir;b.addEventListener('pointerdown',e=>{e.preventDefault();wanted=d;},{passive:false});});
-window.addEventListener('keydown',e=>{const k=e.key.toLowerCase();const mapKey={arrowup:'up',w:'up',arrowdown:'down',s:'down',arrowleft:'left',a:'left',arrowright:'right',d:'right'};if(mapKey[k]){e.preventDefault();wanted=mapKey[k];}if(k===' '){e.preventDefault();if(running){paused=!paused;if(!paused){lastTime=performance.now();requestAnimationFrame(loop);}else showMessage('SZÜNET','Nyomd meg a Folytatás gombot, amikor készen állsz.',true);}}});
-build();setHud();draw();
-})();
-</script></body></html>
+document.getElementById('pause').onclick=()=>{if(!active&&!paused)return;paused=!paused;if(paused){active=false;show('Pihenő! ☕','MatMan most megszámolja, mennyi pénz fér egy zsebbe.','FOLYTATÁS ▶');document.getElementById('start').onclick=()=>{document.getElementById('overlay').classList.add('hidden');paused=false;active=true;last=performance.now();document.getElementById('start').onclick=start;requestAnimationFrame(loop);};}else{active=true;last=performance.now();requestAnimationFrame(loop);}};
+document.querySelectorAll('[data-dir]').forEach(b=>b.addEventListener('pointerdown',e=>{e.preventDefault();wanted=b.dataset.dir;},{passive:false}));
+window.addEventListener('keydown',e=>{let k=e.key.toLowerCase(),keys={arrowup:'up',w:'up',arrowdown:'down',s:'down',arrowleft:'left',a:'left',arrowright:'right',d:'right'};if(keys[k]){e.preventDefault();wanted=keys[k];}if(k===' '&&active){e.preventDefault();document.getElementById('pause').click();}});
+init();draw();
+})();</script></body></html>
