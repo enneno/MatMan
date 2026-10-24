@@ -14,12 +14,20 @@
 (()=>{'use strict';
 const canvas=document.getElementById('game'),ctx=canvas.getContext('2d'),T=32,C=15,R=17,W=C*T,H=R*T;
 const DIR={up:{x:0,y:-1},down:{x:0,y:1},left:{x:-1,y:0},right:{x:1,y:0}},KEY={arrowup:'up',w:'up',arrowdown:'down',s:'down',arrowleft:'left',a:'left',arrowright:'right',d:'right'};
-let grid,player,enemies,coins,particles,floating,score,lives,frame=0,active=false,paused=false,over=false,last=0,acc=0,stepMs=108,desired='right',facing='right',shake=0,combo=0,comboTimer=0,exit={x:13,y:15},audio=null;
+let grid,player,enemies,coins,particles,floating,score,lives,frame=0,active=false,paused=false,over=false,last=0,acc=0,stepMs=145,desired='right',facing='right',shake=0,combo=0,comboTimer=0,exit={x:13,y:15},audio=null;
 function makeMaze(){grid=Array.from({length:R},()=>Array(C).fill('#'));let stack=[[1,1]];grid[1][1]=' ';while(stack.length){let [x,y]=stack[stack.length-1],opts=[];for(let d of Object.values(DIR)){let nx=x+d.x*2,ny=y+d.y*2;if(nx>0&&ny>0&&nx<C-1&&ny<R-1&&grid[ny][nx]==='#')opts.push({x:nx,y:ny,wx:x+d.x,wy:y+d.y});}if(!opts.length){stack.pop();continue;}let o=opts[Math.floor(Math.random()*opts.length)];grid[o.wy][o.wx]=' ';grid[o.y][o.x]=' ';stack.push([o.x,o.y]);}
  // Create extra loops so routes have choices, not just a long corridor.
  for(let y=1;y<R-1;y++)for(let x=1;x<C-1;x++)if(grid[y][x]==='#'&&Math.random()<.13){let n=0;for(let d of Object.values(DIR))if(grid[y+d.y][x+d.x]===' ')n++;if(n>=2)grid[y][x]=' ';}
  // Guaranteed exit corridor and a clear spawn.
  grid[1][1]=' ';grid[1][2]=' ';grid[2][1]=' ';grid[15][13]=' ';grid[15][12]=' ';grid[14][13]=' ';grid[15][14]='#';
+ // Connect the exit corridor to the maze's main connected area.
+ const seen=new Set(['1,1']),q=[[1,1]];
+ for(let i=0;i<q.length;i++){const [x,y]=q[i];for(const d of Object.values(DIR)){const nx=x+d.x,ny=y+d.y,k=nx+','+ny;if(nx>=0&&ny>=0&&nx<C&&ny<R&&grid[ny][nx]!=='#'&&!seen.has(k)){seen.add(k);q.push([nx,ny]);}}}
+ // Find the nearest connected tile and carve a short route from the exit to it.
+ const targets=[];for(let y=1;y<R-1;y++)for(let x=1;x<C-1;x++)if(seen.has(x+','+y))targets.push({x,y,d:distance(x,y,exit.x,exit.y)});
+ targets.sort((a,b)=>a.d-b.d);
+ let tx=exit.x,ty=exit.y,guard=0;
+ while(!seen.has(tx+','+ty)&&guard++<C+R){grid[ty][tx]=' ';if(tx!==targets[0].x)tx+=Math.sign(targets[0].x-tx);else if(ty!==targets[0].y)ty+=Math.sign(targets[0].y-ty);}
 }
 function walkable(x,y){return x>=0&&y>=0&&x<C&&y<R&&grid[y][x]!=='#'&&(grid[y][x]!=='D'||coins.every(c=>c.got));}
 function distance(x,y,a,b){return Math.abs(x-a)+Math.abs(y-b);}
