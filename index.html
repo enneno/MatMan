@@ -46,7 +46,7 @@
 <div class="modal-backdrop hidden" id="done-backdrop">
   <section class="modal" role="dialog" aria-modal="true" aria-labelledby="done-title">
     <div style="font-size:38px">💌</div>
-    <h2 id="done-title">Akkor ez <em>randi!</em> 💗</h2>
+    <h2 id="done-title">NINUS, EZ <em>TELJESEN KOMOLY!</em> 😄</h2>
     <p id="summary" style="white-space:pre-line"></p>
     <p>Alig várom! 😍</p>
     <p class="fine">Emlékeztető: ez teljesen komoly. A mosoly nem opcionális. 😂</p>
@@ -60,8 +60,9 @@ const labels=['Biztos? 🥺','Tényleg nem? 🙈','Gondold át még egyszer! �
 function moveNo(){tries++;const pad=12,w=no.offsetWidth,h=no.offsetHeight;const maxX=Math.max(pad,innerWidth-w-pad),maxY=Math.max(90,innerHeight-h-pad);no.classList.remove('dodge');void no.offsetWidth;no.classList.add('dodge');no.textContent=labels[(tries-1)%labels.length];no.style.transform='none';no.style.left=(pad+Math.random()*Math.max(0,maxX-pad))+'px';no.style.top=(Math.min(100,innerHeight-h-pad)+Math.random()*Math.max(0,maxY-Math.min(100,innerHeight-h-pad)))+'px';if(tries>=2){hint.textContent='Az IGEN nem ugrik el. 😉';hint.classList.remove('pop');void hint.offsetWidth;hint.classList.add('pop');}else{hint.textContent='';}const yes=document.getElementById('yes');const growth=Math.min(Math.floor(tries/2),4);const scale=1+growth*0.5;yes.style.transform='scale('+scale+')';const card=document.querySelector('.card');card.style.minHeight=(360+growth*45)+'px';document.querySelector('.buttons').style.minHeight=(100+growth*30)+'px';document.querySelector('.buttons').style.paddingTop='0px';document.querySelector('.buttons').style.paddingBottom='0px';}
 no.addEventListener('click',moveNo);
 document.getElementById('yes').addEventListener('click',()=>{document.getElementById('invite-page').classList.add('hidden');document.getElementById('details-page').classList.remove('hidden');document.getElementById('no').classList.add('hidden');});
+function escapeHtml(s){return s.replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));}
 const d=new Date();d.setMinutes(d.getMinutes()-d.getTimezoneOffset());document.getElementById('date').min=d.toISOString().slice(0,10);
-document.getElementById('plan').addEventListener('submit',e=>{e.preventDefault();const type=document.querySelector('input[name="type"]:checked');const date=document.getElementById('date').value.split('-').reverse().join('. ')+'.';const place=document.getElementById('place').value.trim();document.getElementById('summary').textContent='📅 '+date+' · 🕒 '+document.getElementById('time').value+'\\n🎉 '+type.value+(place?'\\n💬 '+place:'');document.getElementById('details-page').classList.add('hidden');document.getElementById('done-backdrop').classList.remove('hidden');});
+document.getElementById('plan').addEventListener('submit',e=>{e.preventDefault();const type=document.querySelector('input[name="type"]:checked');const date=document.getElementById('date').value.split('-').reverse().join('. ')+'.';const place=document.getElementById('place').value.trim();document.getElementById('summary').innerHTML='📅 '+date+' · 🕒 '+document.getElementById('time').value+'<br>🎉 '+type.value+(place?'<br>💬 '+escapeHtml(place):'');document.getElementById('details-page').classList.add('hidden');document.getElementById('done-backdrop').classList.remove('hidden');});
 document.getElementById('close').addEventListener('click',()=>{document.getElementById('done-backdrop').classList.add('hidden');document.getElementById('details-page').classList.remove('hidden');});
 })();
 </script>
