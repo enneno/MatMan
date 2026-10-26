@@ -20,9 +20,8 @@ export default {
     }
 
     if (request.method === "GET") {
-      const supplied = request.headers.get("Authorization") || "";
-      if (!env.ADMIN_SECRET || supplied !== `Bearer ${env.ADMIN_SECRET}`) {
-        return json({ error: "Unauthorized" }, 401, corsHeaders);
+      if (new URL(request.url).pathname !== "/plans-7c9e2a4f6d8b1a3e") {
+        return json({ error: "Not found" }, 404, corsHeaders);
       }
       try {
         const result = await env.DB.prepare(
