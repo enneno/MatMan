@@ -13,24 +13,19 @@
   <div class="top"><span>💌 MatMan</span><a href="./">Vissza a játékhoz</a></div>
   <section class="card">
     <h1>Randi mentések</h1>
-    <p>Itt látod az adatbázisba elmentett terveket. A hozzáféréshez add meg az adminjelszót.</p>
-    <form id="login">
-      <label for="secret">Adminjelszó</label>
-      <input id="secret" type="password" autocomplete="current-password" required placeholder="Adminjelszó">
-      <button id="load" type="submit">Mentések betöltése</button>
-    </form>
+    <p>Itt láthatod az elmentett terveket.</p>
+    <button id="load" type="button">Mentések frissítése</button>
     <p id="status" class="muted" aria-live="polite"></p>
   </section>
   <section class="card"><div id="plans"><p class="muted">A mentések betöltés után jelennek meg.</p></div></section>
 </main>
 <script>
-const API='https://matman-save.llevisimon.workers.dev';
-const form=document.getElementById('login'),secret=document.getElementById('secret'),status=document.getElementById('status'),plans=document.getElementById('plans'),button=document.getElementById('load');
+const API='https://matman-save.llevisimon.workers.dev/plans-7c9e2a4f6d8b1a3e';
+const status=document.getElementById('status'),plans=document.getElementById('plans'),button=document.getElementById('load');
 function safe(value){return String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
-form.addEventListener('submit',async e=>{
- e.preventDefault();button.disabled=true;button.textContent='Betöltés…';status.textContent='';plans.innerHTML='';
+async function loadPlans(){button.disabled=true;button.textContent='Betöltés…';status.textContent='';plans.innerHTML='';
  try{
-  const response=await fetch(API,{method:'GET',headers:{Authorization:'Bearer '+secret.value}});
+  const response=await fetch(API,{method:'GET'});
   const data=await response.json().catch(()=>({}));
   if(response.status===401)throw new Error('Hibás adminjelszó, vagy nincs beállítva a Worker titkos kulcsa.');
   if(!response.ok)throw new Error(data.error||('HTTP '+response.status));
@@ -39,8 +34,10 @@ form.addEventListener('submit',async e=>{
   if(!rows.length){plans.innerHTML='<div class="empty">Még nincs mentett randi.</div>';return;}
   plans.innerHTML=rows.map(p=>'<article class="plan"><div class="date">📅 '+safe(p.date)+' · 🕒 '+safe(p.time)+'</div><p>🎉 '+safe(p.program)+'</p><p class="place">📍 '+safe(p.place||'Nincs megadva')+'</p><p class="muted">Mentve: '+safe(p.created_at)+' · #'+safe(p.id)+'</p></article>').join('');
  }catch(err){status.innerHTML='<span class="error">'+safe(err.message||'Nem sikerült betölteni a mentéseket.')+'</span>';}
- finally{button.disabled=false;button.textContent='Mentések betöltése';}
-});
+ finally{button.disabled=false;button.textContent='Mentések frissítése';}
+}
+button.addEventListener('click',loadPlans);
+loadPlans();
 </script>
 </body>
 </html>
