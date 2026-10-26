@@ -1,3 +1,4 @@
+// MatMan date-plan save API; commit to trigger Cloudflare build.
 const ALLOWED_ORIGIN = "https://enneno.github.io";
 
 export default {
