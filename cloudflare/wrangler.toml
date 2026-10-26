@@ -1,0 +1,8 @@
+name = "matman-save"
+main = "worker.js"
+compatibility_date = "2026-10-26"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "matman-db"
+database_id = "PASTE_D1_DATABASE_ID_HERE"
