@@ -1,4 +1,4 @@
-// MatMan date-plan API: save plans and list them for the private admin page.
+// Randi date-plan API: save plans and list them for the private admin page.
 const ALLOWED_ORIGIN = "https://enneno.github.io";
 
 export default {
