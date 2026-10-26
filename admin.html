@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="hu">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#fff2f5">
+<title>MatMan – Randi mentések</title>
+<style>
+:root{color-scheme:light;--pink:#e7537b;--dark:#492c3b}*{box-sizing:border-box}body{margin:0;padding:22px 16px 40px;font-family:system-ui,-apple-system,sans-serif;color:var(--dark);background:linear-gradient(145deg,#fff8f2,#fff1f5);min-height:100vh}.wrap{max-width:680px;margin:auto}.card{background:#ffffffed;border:1px solid white;border-radius:22px;padding:22px;margin:14px 0;box-shadow:0 12px 35px #a74e6a15}h1{font-size:clamp(27px,7vw,38px);margin:4px 0 8px}p{line-height:1.5;color:#795a6b}label{font-weight:750;display:block;margin:12px 0 6px}input,button{font:inherit;width:100%;padding:14px;border-radius:13px}input{border:1px solid #eccbd5;background:white;color:var(--dark)}button{margin-top:12px;border:0;background:var(--pink);color:white;font-weight:800;cursor:pointer}button:disabled{opacity:.6}.muted{font-size:13px}.plan{border:1px solid #f0d1da;border-radius:16px;padding:15px;margin:12px 0;background:#fffafd}.date{font-size:18px;font-weight:850}.empty{padding:20px;text-align:center;background:#fff5f8;border-radius:14px}.error{color:#b4234b;font-weight:750;overflow-wrap:anywhere}.place{white-space:pre-wrap;overflow-wrap:anywhere}.top{display:flex;justify-content:space-between;align-items:center;gap:10px}.top a{color:#c74369}
+</style>
+</head>
+<body><main class="wrap">
+  <div class="top"><span>💌 MatMan</span><a href="./">Vissza a játékhoz</a></div>
+  <section class="card">
+    <h1>Randi mentések</h1>
+    <p>Itt látod az adatbázisba elmentett terveket. A hozzáféréshez add meg az adminjelszót.</p>
+    <form id="login">
+      <label for="secret">Adminjelszó</label>
+      <input id="secret" type="password" autocomplete="current-password" required placeholder="Adminjelszó">
+      <button id="load" type="submit">Mentések betöltése</button>
+    </form>
+    <p id="status" class="muted" aria-live="polite"></p>
+  </section>
+  <section class="card"><div id="plans"><p class="muted">A mentések betöltés után jelennek meg.</p></div></section>
+</main>
+<script>
+const API='https://matman-save.llevisimon.workers.dev';
+const form=document.getElementById('login'),secret=document.getElementById('secret'),status=document.getElementById('status'),plans=document.getElementById('plans'),button=document.getElementById('load');
+function safe(value){return String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+form.addEventListener('submit',async e=>{
+ e.preventDefault();button.disabled=true;button.textContent='Betöltés…';status.textContent='';plans.innerHTML='';
+ try{
+  const response=await fetch(API,{method:'GET',headers:{Authorization:'Bearer '+secret.value}});
+  const data=await response.json().catch(()=>({}));
+  if(response.status===401)throw new Error('Hibás adminjelszó, vagy nincs beállítva a Worker titkos kulcsa.');
+  if(!response.ok)throw new Error(data.error||('HTTP '+response.status));
+  const rows=data.plans||[];
+  status.textContent=rows.length+' mentés betöltve.';
+  if(!rows.length){plans.innerHTML='<div class="empty">Még nincs mentett randi.</div>';return;}
+  plans.innerHTML=rows.map(p=>'<article class="plan"><div class="date">📅 '+safe(p.date)+' · 🕒 '+safe(p.time)+'</div><p>🎉 '+safe(p.program)+'</p><p class="place">📍 '+safe(p.place||'Nincs megadva')+'</p><p class="muted">Mentve: '+safe(p.created_at)+' · #'+safe(p.id)+'</p></article>').join('');
+ }catch(err){status.innerHTML='<span class="error">'+safe(err.message||'Nem sikerült betölteni a mentéseket.')+'</span>';}
+ finally{button.disabled=false;button.textContent='Mentések betöltése';}
+});
+</script>
+</body>
+</html>
