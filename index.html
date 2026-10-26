@@ -1,119 +1,62 @@
 <!doctype html>
 <html lang="hu">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#fff5f6"><meta name="description" content="Szia Ninus! Lenne kedved randizni velem? 💗">
-<title>Ninus, lenne kedved randizni? 💌</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#fff2f5">
+<title>Szia Ninus! 💌</title>
 <style>
-:root{color-scheme:light;--ink:#482d3d;--muted:#896b7a;--pink:#ee6c8b;--deep:#be4165;--line:#f1cbd5;--cream:#fffaf6;--shadow:0 18px 55px #a94d6d1b}
-*{box-sizing:border-box}html{min-height:100%;background:var(--cream)}body{margin:0;min-height:100vh;padding:20px 12px 32px;color:var(--ink);font-family:ui-rounded,"Trebuchet MS",system-ui,-apple-system,sans-serif;background:radial-gradient(ellipse at 8% 0%,#ffe3e9,transparent 40%),radial-gradient(ellipse at 100% 30%,#fff0dc,transparent 37%),linear-gradient(150deg,#fff8f6,#fffaf6)}
-button,input,select,textarea{font:inherit}button{cursor:pointer}.shell{width:min(100%,560px);margin:0 auto}.brand{display:flex;align-items:center;justify-content:center;gap:9px;margin:0 0 18px;font-size:11px;letter-spacing:2px;font-weight:900;color:#b85a77;text-transform:uppercase}.brand span{display:grid;place-items:center;width:33px;height:33px;border-radius:11px;background:white;box-shadow:0 4px 15px #c65b7620;font-size:17px}.card{position:relative;overflow:hidden;padding:clamp(22px,6vw,40px);border:1px solid #ffffffd9;border-radius:27px;background:#ffffffdf;box-shadow:var(--shadow);backdrop-filter:blur(12px)}.card:before{content:"";position:absolute;right:-48px;top:-55px;width:150px;height:150px;border-radius:50%;background:#ffe7ec;z-index:0}.card>*{position:relative;z-index:1}.eyebrow{display:inline-flex;align-items:center;gap:7px;padding:7px 11px;border-radius:999px;background:#fff0f3;color:#b54d6c;font-size:10px;font-weight:900;letter-spacing:.8px;text-transform:uppercase}h1{font-size:clamp(32px,8.7vw,48px);line-height:1.03;letter-spacing:-1.5px;margin:18px 0 13px;font-weight:900}h1 em{font-style:normal;color:var(--deep)}h2{font-size:clamp(24px,6vw,32px);line-height:1.1;letter-spacing:-.6px;margin:12px 0 8px}p{font-size:14px;line-height:1.65;color:#735868;margin:0 0 17px}.subtle{font-size:12px;color:var(--muted)}.center{text-align:center}.heart{display:inline-block;color:var(--pink);animation:pulse 1.6s ease-in-out infinite}@keyframes pulse{0%,100%{transform:scale(1)}12%{transform:scale(1.15)}24%{transform:scale(1)}}
-.stack{display:grid;gap:14px}.field{display:grid;gap:7px}label{font-size:12px;font-weight:850;color:#67475a}input,select,textarea{width:100%;border:1px solid var(--line);border-radius:13px;padding:12px 13px;background:#fffdfd;color:var(--ink);outline:none;min-height:47px}textarea{min-height:82px;resize:vertical}input:focus,select:focus,textarea:focus{border-color:var(--pink);box-shadow:0 0 0 3px #f26b8a20}.two{display:grid;grid-template-columns:1fr 1fr;gap:11px}.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:49px;padding:12px 17px;border:0;border-radius:14px;font-weight:900;text-align:center;transition:transform .15s,box-shadow .15s}.primary{background:linear-gradient(135deg,#f58ca2,#e85d80);color:white;box-shadow:0 6px 0 #c94b6e30,0 10px 24px #ed6e8b25}.primary:active{transform:translateY(2px);box-shadow:0 2px 0 #c94b6e30}.secondary{background:#fff0f3;color:#a94262;border:1px solid #f8d5dd}.quiet{background:transparent;color:#987382}.full{width:100%}.illustration{display:grid;place-items:center;width:86px;height:86px;margin:20px auto 14px;border-radius:28px;background:linear-gradient(145deg,#fff1f4,#fff9ee);border:1px solid white;box-shadow:0 10px 30px #d65d7b1c;font-size:42px;transform:rotate(-4deg)}.choice-arena{position:relative;display:flex;align-items:center;justify-content:center;gap:12px;min-height:114px;margin:12px 0 3px}.choice-arena button{min-width:120px}.no-btn{position:fixed;left:68%;top:72%;transform:translate(-50%,-50%);z-index:20;background:#fff;color:#865c6d;border:1px solid #f2d9e0;box-shadow:0 5px 16px #7b3d5310;white-space:nowrap;min-width:104px!important}.yes-btn{z-index:2}.notice{border-radius:13px;background:#fff7f2;padding:12px 14px;color:#8e6878;font-size:12px;line-height:1.55;margin-top:14px}.hide{display:none!important}.options{display:grid;grid-template-columns:1fr 1fr;gap:8px}.option{position:relative}.option input{position:absolute;opacity:0;pointer-events:none;width:1px;height:1px}.option span{display:flex;align-items:center;gap:8px;min-height:54px;padding:10px;border:1px solid var(--line);border-radius:13px;background:white;line-height:1.25;font-size:12px;font-weight:800;color:#745264;transition:.15s}.option input:checked+span{background:#fff0f3;border-color:var(--pink);box-shadow:0 0 0 2px #f26b8a17;color:#a9385b}.option b{font-size:20px}.preview{border:1px dashed #efb7c6;background:#fff8f9;border-radius:14px;padding:14px}.preview-title{font-size:10px;letter-spacing:1.3px;text-transform:uppercase;font-weight:900;color:#b45c76;margin-bottom:8px}.preview-text{font-size:14px;line-height:1.65;white-space:pre-wrap;color:#5d4050;overflow-wrap:anywhere}.linkbox{overflow-wrap:anywhere;word-break:break-word;padding:13px;border:1px solid var(--line);background:#fff9fb;border-radius:12px;font-size:13px;color:#a64261}.error{padding:13px 14px;border-radius:12px;background:#fff0ed;color:#a03838;font-size:13px;line-height:1.5}#success{position:fixed;z-index:50;left:50%;top:50%;transform:translate(-50%,-50%);width:min(92vw,520px);max-height:88dvh;overflow:auto;box-shadow:0 20px 100px #482d3d55;border:1px solid white}body:has(#success:not(.hide)):before{content:"";position:fixed;inset:0;background:#482d3d80;z-index:40;backdrop-filter:blur(5px)}.success-icon{width:78px;height:78px;display:grid;place-items:center;margin:6px auto 18px;border-radius:50%;background:#e9f7ef;color:#2f8669;font-size:36px}.footer{text-align:center;padding:19px 10px 0;font-size:11px;color:#b18e9c;line-height:1.6}.small{font-size:11px!important;line-height:1.55!important;margin-bottom:0!important}hr{border:0;border-top:1px solid #f6dce3;margin:3px 0}
-@media(max-width:390px){body{padding:13px 9px 24px}.card{padding:22px 17px;border-radius:22px}.two{grid-template-columns:1fr}.choice-arena{min-height:125px}.choice-arena button{min-width:108px;padding:11px 13px}.options{gap:7px}.option span{padding:9px 8px;font-size:11px}}@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+:root{--pink:#ed6b8b;--dark:#492c3b;--pale:#fff3f6}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;font-family:system-ui,-apple-system,sans-serif;color:var(--dark);background:radial-gradient(circle at 10% 5%,#ffe0e9,transparent 35%),linear-gradient(145deg,#fff8f2,#fff1f5);display:grid;place-items:center;padding:20px}
+.card{width:min(100%,500px);background:#ffffffed;border:1px solid white;border-radius:28px;padding:clamp(24px,7vw,38px);text-align:center;box-shadow:0 20px 60px #a74e6a20}
+.flower{font-size:48px;margin:5px 0 12px}h1{font-size:clamp(34px,9vw,48px);line-height:1.08;letter-spacing:-1.5px;margin:10px 0 16px}h1 em{color:#c74369;font-style:normal}p{font-size:16px;line-height:1.5;color:#795a6b}.buttons{position:relative;min-height:100px;margin:20px 0 0;display:flex;align-items:center;justify-content:center;gap:14px}button{font:inherit;font-weight:850;border:0;border-radius:15px;padding:14px 20px;min-height:52px;cursor:pointer}.yes{color:white;background:linear-gradient(135deg,#f38da5,#e7537b);box-shadow:0 7px 0 #c7446828}.no{position:fixed;left:68%;top:72%;z-index:10;background:white;color:#795366;border:1px solid #f0cbd6;box-shadow:0 6px 20px #6f31421c;transform:translate(-50%,-50%);white-space:nowrap}.hint{min-height:24px;font-size:14px;color:#b24b6c;font-weight:750;margin:5px 0 0}.hidden{display:none!important}.modal-backdrop{position:fixed;inset:0;z-index:20;background:#38202fb5;backdrop-filter:blur(5px);display:grid;place-items:center;padding:18px}.modal{width:min(100%,440px);max-height:90dvh;overflow:auto;background:#fffaf9;border-radius:24px;padding:25px;text-align:center;box-shadow:0 25px 80px #2b142855}.modal h2{font-size:clamp(30px,8vw,42px);line-height:1.05;margin:8px 0 14px}.modal h2 em{font-style:normal;color:#c74369}.field{text-align:left;margin:12px 0}.field label{display:block;font-size:13px;font-weight:800;margin-bottom:6px}input,select,textarea{width:100%;font:inherit;padding:12px;border:1px solid #eccbd5;border-radius:12px;background:white;color:var(--dark)}.types{display:grid;grid-template-columns:1fr 1fr;gap:8px}.types label{display:flex;align-items:center;gap:8px;padding:10px;border:1px solid #f0d1da;border-radius:12px;background:white;font-size:13px;font-weight:750}.types input{width:auto;min-height:0}.confirm{width:100%;margin-top:12px}.fine{font-size:12px!important;margin-bottom:0}
 </style>
 </head>
 <body>
-<div class="shell">
-
-<main>
-<section id="builder" class="card hide">
-<span class="eyebrow">✦ Saját meghívó</span>
-<h1>Készíts egy <em>randimeghívót.</em></h1>
-<p>Írd meg, kit hívsz el, és készíts egy személyes linket. Ha elfogadja, kiválasztja a dátumot és a programot, a válasz pedig megjelenik a meghívó rendszerében.</p>
-<form id="builder-form" class="stack">
-<div class="two"><div class="field"><label for="senderName">A te neved</label><input id="senderName" maxlength="60" autocomplete="name" placeholder="Pl. Levi" required></div><div class="field"><label for="recipientName">Kinek szól?</label><input id="recipientName" maxlength="60" placeholder="Pl. Anna" required></div></div>
-<button class="btn primary full" id="create-link" type="submit">Meghívólink készítése ↗</button>
-<button class="btn secondary full" id="preview-link" type="button">Előnézet kipróbálása</button>
-<div id="builder-error" class="error hide" role="alert"></div>
-<div id="created" class="stack hide" aria-live="polite"><hr><h2 style="font-size:22px;margin-bottom:0">Elkészült a link! 🎉</h2><p class="small">Küldd el annak, akit elhívnál. A válasza a rendszerben rögzül.</p><div class="linkbox" id="created-url"></div><button class="btn primary full" id="copy-link" type="button">Link másolása</button><div id="copy-status" class="subtle center" aria-live="polite"></div></div>
-</form>
-</section>
-
-<section id="invite" class="card hide center">
-<div class="question"><span class="eyebrow">✦ Egy fontos kérdés</span><div class="illustration" aria-hidden="true">🌷</div>
-<p id="personal-greeting" class="subtle" style="margin-bottom:6px">Szia Ninus! 💗</p>
-<h1 id="question-heading">Szia Ninus!<br><em>Lenne kedved randizni velem?</em></h1>
-<p>Ígérem, jó programot találunk ki. 😄</p>
-<div class="choice-arena" id="choice-arena"><button class="btn primary yes-btn" id="yes-button" type="button">IGEN 😍</button><button class="btn secondary no-btn" id="no-button" type="button">Nem 🙈</button></div>
-<p id="no-hint" class="subtle small" aria-live="polite"></p><div id="invite-error" class="error hide" role="alert"></div>
-</div>
-</section>
-
-<section id="declined" class="card center hide"><div class="illustration" aria-hidden="true">🫶</div><h1>Rendben, <em>köszönöm, hogy szóltál.</em></h1><p>A poén poén marad, a döntés a tiéd. Kellemes napot! 💗</p></section>
-
-<section id="details" class="card hide">
-<span class="eyebrow">✦ A legjobb rész</span><h1>Na jó, akkor <em>tervezzük meg!</em></h1><p>Válaszd ki, mikor és mit csináljatok. A részletek még változhatnak — a jó társaság a lényeg. 💗</p>
-<form id="response-form" class="stack">
-<div class="field"><label for="date">Melyik nap legyen?</label><input id="date" type="date" required></div>
-<div class="two"><div class="field"><label for="time">Hány órakor?</label><input id="time" type="time" value="18:00" required></div><div class="field"><label for="place">Hol? (nem kötelező)</label><input id="place" maxlength="140" placeholder="Pl. belváros"></div></div>
-<div class="field"><label>Milyen legyen a randi?</label><div class="options" id="date-types">
-<label class="option"><input type="radio" name="dateType" value="Kávézás" required><span><b>☕</b> Kávézás</span></label>
-<label class="option"><input type="radio" name="dateType" value="Reggeli vagy brunch"><span><b>🥐</b> Reggeli / brunch</span></label>
-<label class="option"><input type="radio" name="dateType" value="Ebéd"><span><b>🍝</b> Ebéd</span></label>
-<label class="option"><input type="radio" name="dateType" value="Vacsora"><span><b>🍷</b> Vacsora</span></label>
-<label class="option"><input type="radio" name="dateType" value="Mozi"><span><b>🎬</b> Mozi</span></label>
-<label class="option"><input type="radio" name="dateType" value="Séta a szabadban"><span><b>🌳</b> Séta</span></label>
-<label class="option"><input type="radio" name="dateType" value="Piknik"><span><b>🧺</b> Piknik</span></label>
-<label class="option"><input type="radio" name="dateType" value="Múzeum vagy kiállítás"><span><b>🖼️</b> Kiállítás</span></label>
-<label class="option"><input type="radio" name="dateType" value="Játékterem vagy bowling"><span><b>🎳</b> Játék / bowling</span></label>
-<label class="option"><input type="radio" name="dateType" value="Meglepetésrandi"><span><b>🎁</b> Meglepetés</span></label>
-</div></div>
-<div class="field"><label for="note">Valami extra kívánság? (nem kötelező)</label><textarea id="note" maxlength="500" placeholder="Pl. legyen sok süti, és ne legyen horrorfilm 😅"></textarea></div>
-<div class="preview"><div class="preview-title">Így fog szólni a válaszod</div><div class="preview-text" id="message-preview">Örömmel elfogadom a meghívást! 💗</div></div>
-<button class="btn primary full" id="send-response" type="submit">Randi betervezve! 💘</button><div id="response-error" class="error hide" role="alert"></div>
-</form>
-</section>
-
-<section id="success" class="card center hide">
-<div class="success-icon">✓</div><span class="eyebrow">✦ HIVATALOSAN IS TERVBEN</span><h1 style="font-size:clamp(30px,8vw,42px)">NINUS, EZ <em>TELJESEN KOMOLY!</em> 😄</h1><p id="success-copy">A randi részletei:</p>
-<div class="preview" style="text-align:left"><div class="preview-title">A nagy terv 💌</div><div class="preview-text" id="final-message"></div></div>
-<p style="font-weight:900;font-size:16px;margin-top:15px;color:#a9385b">Ezt most már ne felejtsd el! 😂💗</p><button class="btn primary full" id="copy-message" type="button">Részletek másolása</button><p id="email-status" class="subtle small" style="margin-top:10px" aria-live="polite"></p>
-</section>
+<main class="card">
+  <div class="flower" aria-hidden="true">🌷</div>
+  <p style="margin:0 0 4px">Szia Ninus! 💗</p>
+  <h1>Lenne kedved<br><em>randizni velem?</em></h1>
+  <p>Ígérem, megpróbálok menőnek tűnni. 😄</p>
+  <div class="buttons"><button class="yes" id="yes" type="button">IGEN 😍</button></div>
+  <button class="no" id="no" type="button">Nem 🙈</button>
+  <p class="hint" id="hint" aria-live="polite"></p>
 </main>
-
+<div id="modal-backdrop" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <section class="modal">
+    <div style="font-size:36px">💘</div>
+    <h2 id="modal-title">NINUS, EZ <em>TELJESEN KOMOLY!</em> 😄</h2>
+    <p>Jó, akkor tervezzük meg a nagy eseményt!</p>
+    <form id="plan">
+      <div class="field"><label for="date">Mikor legyen?</label><input id="date" type="date" required></div>
+      <div class="field"><label for="time">Hány órakor?</label><input id="time" type="time" value="18:00" required></div>
+      <div class="field"><label>Milyen program legyen?</label><div class="types">
+        <label><input type="radio" name="type" value="☕ Kávézás" required>☕ Kávézás</label>
+        <label><input type="radio" name="type" value="🍝 Vacsora">🍝 Vacsora</label>
+        <label><input type="radio" name="type" value="🎬 Mozi">🎬 Mozi</label>
+        <label><input type="radio" name="type" value="🌳 Séta">🌳 Séta</label>
+        <label><input type="radio" name="type" value="🎁 Meglepetésrandi">🎁 Meglepetés</label>
+        <label><input type="radio" name="type" value="🧺 Piknik">🧺 Piknik</label>
+      </div></div>
+      <div class="field"><label for="place">Helyszín (ha van ötleted)</label><input id="place" maxlength="120" placeholder="Pl. valami jó hely 😊"></div>
+      <button class="yes confirm" type="submit">Randi betervezve! 💘</button>
+    </form>
+    <p class="fine">Emlékeztető: ez teljesen komoly. A mosoly nem opcionális. 😂</p>
+  </section>
+</div>
+<div id="done-backdrop" class="modal-backdrop hidden" role="dialog" aria-modal="true">
+  <section class="modal"><div style="font-size:42px">🥳💗</div><h2>NINUS, EZ <em>HIVATALOS!</em></h2><p id="summary"></p><p style="font-weight:900;font-size:19px;color:#b53d62">NE FELEJTSD EL, EZ TELJESEN KOMOLY! 😂</p><button class="yes confirm" id="close" type="button">Vettem az adást! 😇</button></section>
 </div>
 <script>
 (function(){
-'use strict';
-var pages=['builder','invite','declined','details','success'],params=new URLSearchParams(location.search),inviteId=params.get('invite'),invite=null,previewMode=false,noCount=0,lastMessage='';
-var noLabels=['Az IGEN nem ugrik el. 😉','Majdnem! 😅','Hoppá, ez most mellément. 😂','A Nem ma sportos. 🏃','Még egy próbát? 😏'];
-var endpoint=new URL('/api/invites',location.origin).toString();
-function page(id){pages.forEach(function(p){document.getElementById(p).classList.toggle('hide',p!==id);});window.scrollTo({top:0,behavior:'smooth'});}
-function txt(id,value){document.getElementById(id).textContent=value;}
-function err(id,msg){var el=document.getElementById(id);el.textContent=msg;el.classList.remove('hide');}
-function clearErr(id){var el=document.getElementById(id);el.classList.add('hide');el.textContent='';}
-function dateLabel(v){if(!v)return '[dátum]';var a=v.split('-');return a.length===3?a[2]+'. '+a[1]+'. '+a[0]+'.':v;}
-function makeMessage(d){var where=d.place&&d.place.trim()?' Helyszín: '+d.place.trim()+'.':'';var note=d.note&&d.note.trim()?' Extra kívánság: '+d.note.trim()+'.':'';return 'Szia '+(d.senderName||'')+'! 💗\n\nÖrömmel elfogadom a randimeghívást! Legyen '+dateLabel(d.date)+' '+(d.time||'')+', és csináljuk ezt: '+(d.dateType||'randi').toLowerCase()+'.'+where+note+'\n\nMár várom! 😊\n— '+(d.recipientName||'');}
-function responseData(){var r=document.querySelector('input[name="dateType"]:checked');return{date:document.getElementById('date').value,time:document.getElementById('time').value,dateType:r?r.value:'',place:document.getElementById('place').value.trim(),note:document.getElementById('note').value.trim()};}
-function updatePreview(){if(!invite)return;var d=responseData();txt('message-preview',makeMessage({senderName:invite.senderName,recipientName:invite.recipientName,date:d.date,time:d.time,dateType:d.dateType,place:d.place,note:d.note}));}
-function setupDate(){var d=new Date(),local=new Date(d.getTime()-d.getTimezoneOffset()*60000).toISOString().slice(0,10);document.getElementById('date').min=local;if(!document.getElementById('date').value)document.getElementById('date').value=local;}
-async function copyText(value,statusId){try{await navigator.clipboard.writeText(value);if(statusId)txt(statusId,'Másolva! ✓');return true;}catch(e){var a=document.createElement('textarea');a.value=value;a.setAttribute('readonly','');a.style.position='fixed';a.style.opacity='0';document.body.appendChild(a);a.select();var ok=false;try{ok=document.execCommand('copy');}catch(x){}a.remove();if(statusId)txt(statusId,ok?'Másolva! ✓':'A másolás nem sikerült. Jelöld ki, és másold ki a szöveget.');return ok;}}
-async function api(method,data,url){var r=await fetch(url||endpoint,{method:method,headers:{'Content-Type':'application/json','Accept':'application/json'},body:method==='GET'?undefined:JSON.stringify(data)});var d={};try{d=await r.json();}catch(e){}if(!r.ok)throw new Error(d.error||'A kérés nem sikerült ('+r.status+').');return d;}
-function setupInvite(d){invite=d;previewMode=!!d.preview;txt('personal-greeting','Szia Ninus! 💗');noCount=0;var b=document.getElementById('no-button');b.textContent='Nem 🙈';b.style.left='68%';b.style.top='72%';txt('no-hint','');document.getElementById('yes-button').disabled=false;b.disabled=false;clearErr('invite-error');page('invite');}
-function dodgeNo(){noCount++;var b=document.getElementById('no-button'),pad=12,w=b.offsetWidth,h=b.offsetHeight,maxX=Math.max(pad,window.innerWidth-w-pad),maxY=Math.max(90,window.innerHeight-h-pad);b.style.left=(pad+Math.random()*Math.max(0,maxX-pad))+'px';b.style.top=(90+Math.random()*Math.max(0,maxY-90))+'px';b.style.transform='translate(0,0)';if(noCount===1){txt('no-hint','Az IGEN nem ugrik el. 😉');}else{txt('no-hint',noLabels[(noCount-1)%noLabels.length]);}}
-
-document.getElementById('no-button').addEventListener('click',function(e){e.preventDefault();dodgeNo();});
-document.getElementById('yes-button').addEventListener('click',function(){if(invite){setupDate();page('details');updatePreview();}});
-document.getElementById('preview-link').addEventListener('click',function(){invite={senderName:document.getElementById('senderName').value.trim()||'Alex',recipientName:document.getElementById('recipientName').value.trim()||'Dóri',preview:true};setupInvite(invite);});
-document.getElementById('builder-form').addEventListener('submit',async function(e){
-e.preventDefault();clearErr('builder-error');var b=document.getElementById('create-link');b.disabled=true;b.textContent='Készítem a linket…';
-try{var d=await api('POST',{action:'create',senderName:document.getElementById('senderName').value.trim(),recipientName:document.getElementById('recipientName').value.trim()});if(!d.url)throw new Error('A szerver nem adott vissza meghívólinket.');txt('created-url',d.url);document.getElementById('created').classList.remove('hide');document.getElementById('copy-link').onclick=function(){copyText(d.url,'copy-status');};}
-catch(e){err('builder-error','A meghívólink nem készült el. Ellenőrizd, hogy a Cloudflare Pages API és a D1-adatbázis be van-e állítva. Részlet: '+e.message);}
-finally{b.disabled=false;b.textContent='Meghívólink készítése ↗';}
-});
-['date','time','place','note'].forEach(function(id){document.getElementById(id).addEventListener('input',updatePreview);});document.querySelectorAll('input[name="dateType"]').forEach(function(r){r.addEventListener('change',updatePreview);});
-document.getElementById('response-form').addEventListener('submit',async function(e){
-e.preventDefault();clearErr('response-error');if(!invite)return;var d=responseData();if(!d.date||!d.time||!d.dateType){err('response-error','Válaszd ki a dátumot, időpontot és a randi típusát.');return;}
-lastMessage=makeMessage({senderName:invite.senderName,recipientName:invite.recipientName,date:d.date,time:d.time,dateType:d.dateType,place:d.place,note:d.note});
-if(previewMode){page('success');txt('success-copy','A választásod alapján ez a terv:');txt('final-message','📅 '+dateLabel(d.date)+'\n🕒 '+d.time+'\n💗 '+d.dateType+(d.place?'\n📍 '+d.place:'')+(d.note?'\n✨ '+d.note:'')+'\n\nNinus, ez teljesen komoly! 😄');txt('email-status','');return;}
-var b=document.getElementById('send-response');b.disabled=true;b.textContent='Küldöm…';
-try{var result=await api('POST',{action:'respond',id:invite.id,date:d.date,time:d.time,dateType:d.dateType,place:d.place,note:d.note});page('success');txt('final-message',result.responseText||lastMessage);txt('success-copy',result.saved?'A válaszodat rögzítettük a rendszerben.':'A válasz elkészült.');txt('email-status','A válasz el lett mentve.');}
-catch(e){err('response-error','Nem sikerült rögzíteni a választ. Próbáld újra, vagy másold ki az üzenetet és küldd el külön. Részlet: '+e.message);var c=document.createElement('button');c.type='button';c.className='btn secondary full';c.style.marginTop='10px';c.textContent='Válasz másolása';c.onclick=function(){copyText(lastMessage);};document.getElementById('response-error').appendChild(document.createElement('br'));document.getElementById('response-error').appendChild(c);}
-finally{b.disabled=false;b.textContent='Elfogadom a meghívást 💌';}
-});
-document.getElementById('copy-message').addEventListener('click',function(){copyText(document.getElementById('final-message').textContent);txt('email-status','Kimásolva! 💌');});
-document.getElementById('share-message').addEventListener('click',async function(){try{if(navigator.share)await navigator.share({title:'Randimeghívó válasz',text:lastMessage});else{await copyText(lastMessage);txt('email-status','Az üzenetet a vágólapra másoltuk.');}}catch(e){if(e&&e.name!=='AbortError')txt('email-status','A megosztás nem sikerült. Másold ki az üzenetet.');}});
-if(inviteId){page('invite');txt('personal-greeting','Egy pillanat… 💌');api('GET',null,endpoint+'?id='+encodeURIComponent(inviteId)).then(function(d){if(d.status==='accepted'){page('success');txt('success-copy','Erre a meghívóra már érkezett válasz.');txt('final-message','A válasz már rögzítve lett.');document.getElementById('copy-message').classList.add('hide');document.getElementById('share-message').classList.add('hide');return;}setupInvite(d);}).catch(function(e){page('invite');txt('personal-greeting','Szia Ninus! 💗');err('invite-error','A meghívó mentéséhez a háttérrendszert még be kell állítani.');document.getElementById('yes-button').disabled=false;document.getElementById('no-button').disabled=false;});}else setupInvite({senderName:'',recipientName:'Ninus',preview:true});
+const no=document.getElementById('no'),hint=document.getElementById('hint');let tries=0;
+const jokes=['Az IGEN nem ugrik el. 😉','Hoppá, mellément! 😅','Ez a gomb ma nagyon fürge. 🏃','Ninus, a másik gomb nyugton marad. 😇','Majdnem! 😂'];
+function moveNo(){tries++;const pad=12,w=no.offsetWidth,h=no.offsetHeight;const maxX=Math.max(pad,innerWidth-w-pad),maxY=Math.max(80,innerHeight-h-pad);no.style.transform='none';no.style.left=(pad+Math.random()*Math.max(0,maxX-pad))+'px';no.style.top=(80+Math.random()*Math.max(0,maxY-80))+'px';hint.textContent=jokes[(tries-1)%jokes.length];}
+no.addEventListener('click',moveNo);
+document.getElementById('yes').addEventListener('click',()=>{document.getElementById('modal-backdrop').classList.remove('hidden');});
+const d=new Date();d.setMinutes(d.getMinutes()-d.getTimezoneOffset());document.getElementById('date').min=d.toISOString().slice(0,10);
+document.getElementById('plan').addEventListener('submit',e=>{e.preventDefault();const type=document.querySelector('input[name="type"]:checked');const date=document.getElementById('date').value.split('-').reverse().join('. ')+'.';const place=document.getElementById('place').value.trim();document.getElementById('summary').textContent='📅 '+date+' · 🕒 '+document.getElementById('time').value+' · '+type.value+(place?' · 📍 '+place:'')+'.';document.getElementById('modal-backdrop').classList.add('hidden');document.getElementById('done-backdrop').classList.remove('hidden');});
+document.getElementById('close').addEventListener('click',()=>document.getElementById('done-backdrop').classList.add('hidden'));
 })();
 </script>
 </body>
