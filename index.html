@@ -19,10 +19,9 @@ button,input,select,textarea{font:inherit}button{cursor:pointer}.shell{width:min
 <section id="builder" class="card hide">
 <span class="eyebrow">✦ Saját meghívó</span>
 <h1>Készíts egy <em>randimeghívót.</em></h1>
-<p>Írd meg, kit hívsz el. Kapsz egy személyes linket, amit elküldhetsz neki. Ha elfogadja, kiválasztja a dátumot és a programot, te pedig e-mailben értesítést kapsz.</p>
+<p>Írd meg, kit hívsz el, és készíts egy személyes linket. Ha elfogadja, kiválasztja a dátumot és a programot, a válasz pedig megjelenik a meghívó rendszerében.</p>
 <form id="builder-form" class="stack">
 <div class="two"><div class="field"><label for="senderName">A te neved</label><input id="senderName" maxlength="60" autocomplete="name" placeholder="Pl. Levi" required></div><div class="field"><label for="recipientName">Kinek szól?</label><input id="recipientName" maxlength="60" placeholder="Pl. Anna" required></div></div>
-<div class="field"><label for="senderEmail">E-mail címed</label><input id="senderEmail" type="email" maxlength="254" autocomplete="email" placeholder="Ide érkezik a válasz" required></div>
 <button class="btn primary full" id="create-link" type="submit">Meghívólink készítése ↗</button>
 <button class="btn secondary full" id="preview-link" type="button">Előnézet kipróbálása</button>
 <div id="builder-error" class="error hide" role="alert"></div>
@@ -60,10 +59,9 @@ button,input,select,textarea{font:inherit}button{cursor:pointer}.shell{width:min
 <label class="option"><input type="radio" name="dateType" value="Meglepetésrandi"><span><b>🎁</b> Meglepetés</span></label>
 </div></div>
 <div class="field"><label for="note">Valami extra kívánság? (nem kötelező)</label><textarea id="note" maxlength="500" placeholder="Pl. legyen sok süti, és ne legyen horrorfilm 😅"></textarea></div>
-<div class="field"><label for="respondentEmail">E-mail a visszaigazoláshoz (nem kötelező)</label><input id="respondentEmail" type="email" maxlength="254" placeholder="Ha szeretnél magadnak is e-mailt"></div>
 <div class="preview"><div class="preview-title">Így fog szólni a válaszod</div><div class="preview-text" id="message-preview">Örömmel elfogadom a meghívást! 💗</div></div>
 <button class="btn primary full" id="send-response" type="submit">Elfogadom a meghívást 💌</button>
-<p class="small center">A beküldés a meghívó készítőjének küldi el a választ és a kiválasztott részleteket.</p><div id="response-error" class="error hide" role="alert"></div>
+<p class="small center">A beküldés elmenti a választ és a kiválasztott részleteket a meghívó rendszerébe.</p><div id="response-error" class="error hide" role="alert"></div>
 </form>
 </section>
 
@@ -101,7 +99,7 @@ document.getElementById('preview-link').addEventListener('click',function(){invi
 document.getElementById('builder-form').addEventListener('submit',async function(e){
 e.preventDefault();clearErr('builder-error');var b=document.getElementById('create-link');b.disabled=true;b.textContent='Készítem a linket…';
 try{var d=await api('POST',{action:'create',senderName:document.getElementById('senderName').value.trim(),recipientName:document.getElementById('recipientName').value.trim(),senderEmail:document.getElementById('senderEmail').value.trim()});if(!d.url)throw new Error('A szerver nem adott vissza meghívólinket.');txt('created-url',d.url);document.getElementById('created').classList.remove('hide');document.getElementById('copy-link').onclick=function(){copyText(d.url,'copy-status');};}
-catch(e){err('builder-error','A meghívólink nem készült el, és adatot sem mentettünk. A működéshez Cloudflare Pages API, D1-adatbázis és e-mail-beállítás szükséges. Részlet: '+e.message);}
+catch(e){err('builder-error','A meghívólink nem készült el. Ellenőrizd, hogy a Cloudflare Pages API és a D1-adatbázis be van-e állítva. Részlet: '+e.message);}
 finally{b.disabled=false;b.textContent='Meghívólink készítése ↗';}
 });
 ['date','time','place','note'].forEach(function(id){document.getElementById(id).addEventListener('input',updatePreview);});document.querySelectorAll('input[name="dateType"]').forEach(function(r){r.addEventListener('change',updatePreview);});
@@ -110,7 +108,7 @@ e.preventDefault();clearErr('response-error');if(!invite)return;var d=responseDa
 lastMessage=makeMessage({senderName:invite.senderName,recipientName:invite.recipientName,date:d.date,time:d.time,dateType:d.dateType,place:d.place,note:d.note});
 if(previewMode){page('success');txt('success-copy','Ez csak előnézet: a választ nem mentettük el, és e-mailt sem küldtünk.');txt('final-message',lastMessage);txt('email-status','A valódi beküldéshez a szerveres beállítások szükségesek.');return;}
 var b=document.getElementById('send-response');b.disabled=true;b.textContent='Küldöm…';
-try{var result=await api('POST',{action:'respond',id:invite.id,date:d.date,time:d.time,dateType:d.dateType,place:d.place,note:d.note,respondentEmail:d.respondentEmail});page('success');txt('final-message',result.responseText||lastMessage);txt('success-copy',result.saved?'A válaszodat rögzítettük a rendszerben.':'A válasz elkészült.');var status=[result.senderEmailSent?'A meghívó készítőjének e-mailben is elküldtük az értesítést.':'Az e-mailes értesítés nem igazolható; a készítő ellenőrizze a beállításokat.'];if(d.respondentEmail)status.push(result.respondentEmailSent?'A visszaigazolás a megadott e-mail-címre is megérkezik.':'A saját e-mailes visszaigazolást nem sikerült elküldeni.');txt('email-status',status.join(' '));}
+try{var result=await api('POST',{action:'respond',id:invite.id,date:d.date,time:d.time,dateType:d.dateType,place:d.place,note:d.note});page('success');txt('final-message',result.responseText||lastMessage);txt('success-copy',result.saved?'A válaszodat rögzítettük a rendszerben.':'A válasz elkészült.');txt('email-status','A válasz el lett mentve. E-mail-értesítést nem küldünk.');}
 catch(e){err('response-error','Nem sikerült rögzíteni a választ, ezért visszaigazolást sem küldtünk. Próbáld újra, vagy másold ki az üzenetet és küldd el külön. Részlet: '+e.message);var c=document.createElement('button');c.type='button';c.className='btn secondary full';c.style.marginTop='10px';c.textContent='Válasz másolása';c.onclick=function(){copyText(lastMessage);};document.getElementById('response-error').appendChild(document.createElement('br'));document.getElementById('response-error').appendChild(c);}
 finally{b.disabled=false;b.textContent='Elfogadom a meghívást 💌';}
 });
