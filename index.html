@@ -2,8 +2,8 @@
 <html lang="hu">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#fff5f6"><meta name="description" content="Egy kis bátorság, egy nagy kérdés, és egy randi, amit együtt találtok ki.">
-<title>Van egy kérdésem… 💌</title>
+<meta name="theme-color" content="#fff5f6"><meta name="description" content="Szia Ninus! Lenne kedved randizni velem? 💗">
+<title>Ninus, lenne kedved randizni? 💌</title>
 <style>
 :root{color-scheme:light;--ink:#482d3d;--muted:#896b7a;--pink:#ee6c8b;--deep:#be4165;--line:#f1cbd5;--cream:#fffaf6;--shadow:0 18px 55px #a94d6d1b}
 *{box-sizing:border-box}html{min-height:100%;background:var(--cream)}body{margin:0;min-height:100vh;padding:20px 12px 32px;color:var(--ink);font-family:ui-rounded,"Trebuchet MS",system-ui,-apple-system,sans-serif;background:radial-gradient(ellipse at 8% 0%,#ffe3e9,transparent 40%),radial-gradient(ellipse at 100% 30%,#fff0dc,transparent 37%),linear-gradient(150deg,#fff8f6,#fffaf6)}
@@ -14,7 +14,7 @@ button,input,select,textarea{font:inherit}button{cursor:pointer}.shell{width:min
 </head>
 <body>
 <div class="shell">
-<div class="brand"><span>💌</span> egy kérdés, egy mosoly</div>
+<div class="brand"><span>💌</span> Ninusnak, szeretettel</div>
 <main>
 <section id="builder" class="card hide">
 <span class="eyebrow">✦ Saját meghívó</span>
@@ -31,11 +31,11 @@ button,input,select,textarea{font:inherit}button{cursor:pointer}.shell{width:min
 
 <section id="invite" class="card hide center">
 <div class="question"><span class="eyebrow">✦ Egy fontos kérdés</span><div class="illustration" aria-hidden="true">🌷</div>
-<p id="personal-greeting" class="subtle" style="margin-bottom:6px"></p>
-<h1 id="question-heading">Volna kedved <em>velem randizni?</em></h1>
-<p>Ígérem, nem lesz kínos… vagy legalábbis csak egy kicsit. 😄</p>
-<div class="choice-arena" id="choice-arena"><button class="btn primary yes-btn" id="yes-button" type="button">IGEN! 💗</button><button class="btn secondary no-btn" id="no-button" type="button">Nem 🙈</button></div>
-<p id="no-hint" class="subtle small" aria-live="polite">A „nem” gomb gyanúsan idegesnek tűnik.</p><div id="invite-error" class="error hide" role="alert"></div>
+<p id="personal-greeting" class="subtle" style="margin-bottom:6px">Szia Ninus! 💗</p>
+<h1 id="question-heading">Szia Ninus!<br><em>Lenne kedved randizni velem?</em></h1>
+<p>Csak egy apró IGEN hiányzik a boldogságomhoz. 😄</p>
+<div class="choice-arena" id="choice-arena"><button class="btn primary yes-btn" id="yes-button" type="button">IGEN 😍</button><button class="btn secondary no-btn" id="no-button" type="button">Nem 🙈</button></div>
+<p id="no-hint" class="subtle small" aria-live="polite">A „Nem” gomb valamiért nem akar együttműködni. 🤨</p><div id="invite-error" class="error hide" role="alert"></div>
 </div>
 </section>
 
@@ -71,13 +71,13 @@ button,input,select,textarea{font:inherit}button{cursor:pointer}.shell{width:min
 <div class="stack" style="margin-top:16px"><button class="btn primary full" id="copy-message" type="button">Üzenet másolása</button><button class="btn secondary full" id="share-message" type="button">Megosztás…</button></div><p id="email-status" class="subtle small" style="margin-top:14px" aria-live="polite"></p>
 </section>
 </main>
-<footer class="footer">Egy kis bátorság, sok mosoly. <span class="heart">♥</span><br>Az igen öröm, a nem pedig mindig elfogadható válasz.</footer>
+<footer class="footer">Ninus, az IGEN gomb legalább nem fut el. 😇 <span class="heart">♥</span></footer>
 </div>
 <script>
 (function(){
 'use strict';
 var pages=['builder','invite','declined','details','success'],params=new URLSearchParams(location.search),inviteId=params.get('invite'),invite=null,previewMode=false,noCount=0,lastMessage='';
-var noLabels=['Biztos? 🥺','Gondold át még egyszer!','Tényleg nemet mondasz? 😭','Utolsó esély… 😳','Rendben, kilépek'];
+var noLabels=['Biztos? 🥺','Hoppá, mellément! 😅','A Nem ma nagyon sportos. 🏃','Még mindig itt vagyok! 😏','Ezt a gombot nehéz elkapni! 😂'];
 var endpoint=new URL('/api/invites',location.origin).toString();
 function page(id){pages.forEach(function(p){document.getElementById(p).classList.toggle('hide',p!==id);});window.scrollTo({top:0,behavior:'smooth'});}
 function txt(id,value){document.getElementById(id).textContent=value;}
@@ -90,8 +90,8 @@ function updatePreview(){if(!invite)return;var d=responseData();txt('message-pre
 function setupDate(){var d=new Date(),local=new Date(d.getTime()-d.getTimezoneOffset()*60000).toISOString().slice(0,10);document.getElementById('date').min=local;if(!document.getElementById('date').value)document.getElementById('date').value=local;}
 async function copyText(value,statusId){try{await navigator.clipboard.writeText(value);if(statusId)txt(statusId,'Másolva! ✓');return true;}catch(e){var a=document.createElement('textarea');a.value=value;a.setAttribute('readonly','');a.style.position='fixed';a.style.opacity='0';document.body.appendChild(a);a.select();var ok=false;try{ok=document.execCommand('copy');}catch(x){}a.remove();if(statusId)txt(statusId,ok?'Másolva! ✓':'A másolás nem sikerült. Jelöld ki, és másold ki a szöveget.');return ok;}}
 async function api(method,data,url){var r=await fetch(url||endpoint,{method:method,headers:{'Content-Type':'application/json','Accept':'application/json'},body:method==='GET'?undefined:JSON.stringify(data)});var d={};try{d=await r.json();}catch(e){}if(!r.ok)throw new Error(d.error||'A kérés nem sikerült ('+r.status+').');return d;}
-function setupInvite(d){invite=d;previewMode=!!d.preview;txt('personal-greeting',(d.recipientName?d.recipientName+', ':'')+(d.senderName||'')+' szeretne kérdezni valamit…');noCount=0;var b=document.getElementById('no-button');b.textContent='Nem 🙈';b.style.left='50%';b.style.top='77%';txt('no-hint','A „nem” gomb gyanúsan idegesnek tűnik.');document.getElementById('yes-button').disabled=false;b.disabled=false;clearErr('invite-error');page('invite');}
-function dodgeNo(){if(noCount>=4){page('declined');return;}noCount++;var arena=document.getElementById('choice-arena'),b=document.getElementById('no-button');b.textContent=noLabels[Math.min(noCount-1,noLabels.length-1)];var x=b.offsetWidth/2+Math.random()*Math.max(8,arena.clientWidth-b.offsetWidth-8);var y=18+Math.random()*Math.max(8,arena.clientHeight-36);b.style.left=Math.max(b.offsetWidth/2,Math.min(arena.clientWidth-b.offsetWidth/2,x))+'px';b.style.top=y+'px';txt('no-hint',noCount>=4?'Most már tényleg ki tudsz lépni. 😅':noLabels[noCount-1]);if(noCount>=4)b.textContent='Rendben, kilépek';}
+function setupInvite(d){invite=d;previewMode=!!d.preview;txt('personal-greeting',d.preview?'Szia Ninus! 💗':(d.recipientName?d.recipientName+', ':'')+(d.senderName||'')+' szeretne kérdezni valamit…');noCount=0;var b=document.getElementById('no-button');b.textContent='Nem 🙈';b.style.left='50%';b.style.top='77%';txt('no-hint','A „nem” gomb gyanúsan idegesnek tűnik.');document.getElementById('yes-button').disabled=false;b.disabled=false;clearErr('invite-error');page('invite');}
+function dodgeNo(){noCount++;var arena=document.getElementById('choice-arena'),b=document.getElementById('no-button');b.textContent=noLabels[(noCount-1)%noLabels.length];var x=b.offsetWidth/2+Math.random()*Math.max(8,arena.clientWidth-b.offsetWidth-8);var y=18+Math.random()*Math.max(8,arena.clientHeight-36);b.style.left=Math.max(b.offsetWidth/2,Math.min(arena.clientWidth-b.offsetWidth/2,x))+'px';b.style.top=y+'px';txt('no-hint',noLabels[(noCount-1)%noLabels.length]);}
 document.getElementById('no-button').addEventListener('pointerenter',function(e){if(e.pointerType==='mouse'&&noCount<4)dodgeNo();});
 document.getElementById('no-button').addEventListener('click',function(e){e.preventDefault();if(noCount>=4)page('declined');else dodgeNo();});
 document.getElementById('yes-button').addEventListener('click',function(){if(invite){setupDate();page('details');updatePreview();}});
@@ -114,7 +114,7 @@ finally{b.disabled=false;b.textContent='Elfogadom a meghívást 💌';}
 });
 document.getElementById('copy-message').addEventListener('click',function(){copyText(lastMessage);txt('email-status','Az üzenetet a vágólapra másoltuk.');});
 document.getElementById('share-message').addEventListener('click',async function(){try{if(navigator.share)await navigator.share({title:'Randimeghívó válasz',text:lastMessage});else{await copyText(lastMessage);txt('email-status','Az üzenetet a vágólapra másoltuk.');}}catch(e){if(e&&e.name!=='AbortError')txt('email-status','A megosztás nem sikerült. Másold ki az üzenetet.');}});
-if(inviteId){page('invite');txt('personal-greeting','Egy pillanat, megkeresem a meghívót…');api('GET',null,endpoint+'?id='+encodeURIComponent(inviteId)).then(function(d){if(d.status==='accepted'){page('success');txt('success-copy','Erre a meghívóra már érkezett válasz.');txt('final-message','A válasz már rögzítve lett.');document.getElementById('copy-message').classList.add('hide');document.getElementById('share-message').classList.add('hide');return;}setupInvite(d);}).catch(function(e){page('invite');txt('personal-greeting','');err('invite-error','Ezt a meghívót nem sikerült betölteni. Lehet, hogy hibás a link, vagy a szolgáltatás még nincs beállítva. '+e.message);document.getElementById('yes-button').disabled=true;document.getElementById('no-button').disabled=true;});}else page('builder');
+if(inviteId){page('invite');txt('personal-greeting','Egy pillanat… 💌');api('GET',null,endpoint+'?id='+encodeURIComponent(inviteId)).then(function(d){if(d.status==='accepted'){page('success');txt('success-copy','Erre a meghívóra már érkezett válasz.');txt('final-message','A válasz már rögzítve lett.');document.getElementById('copy-message').classList.add('hide');document.getElementById('share-message').classList.add('hide');return;}setupInvite(d);}).catch(function(e){page('invite');txt('personal-greeting','Szia Ninus! 💗');err('invite-error','A meghívó mentéséhez a háttérrendszert még be kell állítani.');document.getElementById('yes-button').disabled=false;document.getElementById('no-button').disabled=false;});}else setupInvite({senderName:'',recipientName:'Ninus',preview:true});
 })();
 </script>
 </body>
