@@ -5,4 +5,4 @@ compatibility_date = "2026-10-26"
 [[d1_databases]]
 binding = "DB"
 database_name = "matman-db"
-database_id = "PASTE_D1_DATABASE_ID_HERE"
+database_id = "4ae43e4a-d9e5-4b8c-a593-5fde7ba85767"
