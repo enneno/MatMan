@@ -44,8 +44,8 @@ export default {
       const program = String(body.program || "").trim();
       const place = String(body.place || "").trim().slice(0, 500);
 
-      if (!/^\\d{4}-\\d{2}-\\d{2}$/.test(date) ||
-          !/^\\d{2}:\\d{2}$/.test(time) ||
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(date) ||
+          !/^\d{2}:\d{2}$/.test(time) ||
           !program || program.length > 100) {
         return json({ error: "Invalid date plan" }, 400, corsHeaders);
       }
