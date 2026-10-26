@@ -43,7 +43,14 @@
     </form>
     <p class="fine">Emlékeztető: ez teljesen komoly. A mosoly nem opcionális. 😂</p>
 </main>
-ss="yes confirm" id="close" type="button">Vettem az adást! 😇</button></section>
+<div class="modal-backdrop hidden" id="done-backdrop">
+  <section class="modal" role="dialog" aria-modal="true" aria-labelledby="done-title">
+    <div style="font-size:38px">💌</div>
+    <h2 id="done-title">Akkor ez <em>randi!</em> 💗</h2>
+    <p id="summary"></p>
+    <p>Alig várom! 😍</p>
+    <button class="yes confirm" id="close" type="button">Vettem az adást! 😇</button>
+  </section>
 </div>
 <script>
 (function(){
