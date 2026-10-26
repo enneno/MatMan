@@ -43,6 +43,13 @@
     </form>
     <p class="fine">Emlékeztető: ez teljesen komoly. A mosoly nem opcionális. 😂</p>
 </main>
+<main id="thanks-page" class="plan-page hidden" style="text-align:center">
+  <div style="font-size:58px;margin:8px 0 18px">💗🌷💗</div>
+  <h1 style="font-size:clamp(34px,9vw,48px)">Köszönöm, <em>Ninus!</em> 🥹</h1>
+  <p style="font-size:19px;font-weight:750;color:#c74369">Ott leszek, ígérem! 💌</p>
+  <p>Már most várom, hogy találkozzunk. 😊</p>
+  <div style="font-size:44px;margin-top:12px">🥰</div>
+</main>
 <div class="modal-backdrop hidden" id="done-backdrop">
   <section class="modal" role="dialog" aria-modal="true" aria-labelledby="done-title">
     <div style="font-size:38px">💌</div>
@@ -63,7 +70,7 @@ document.getElementById('yes').addEventListener('click',()=>{document.getElement
 function escapeHtml(s){return s.replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));}
 const d=new Date();d.setMinutes(d.getMinutes()-d.getTimezoneOffset());document.getElementById('date').min=d.toISOString().slice(0,10);
 document.getElementById('plan').addEventListener('submit',e=>{e.preventDefault();const type=document.querySelector('input[name="type"]:checked');const date=document.getElementById('date').value.split('-').reverse().join('. ')+'.';const place=document.getElementById('place').value.trim();document.getElementById('summary').innerHTML='📅 '+date+' · 🕒 '+document.getElementById('time').value+'<br>🎉 '+type.value+(place?'<br>💬 '+escapeHtml(place):'');document.getElementById('details-page').classList.add('hidden');document.getElementById('done-backdrop').classList.remove('hidden');});
-document.getElementById('close').addEventListener('click',()=>{const backdrop=document.getElementById('done-backdrop');backdrop.classList.add('hidden');document.getElementById('details-page').classList.remove('hidden');document.getElementById('close').blur();});
+document.getElementById('close').addEventListener('click',()=>{document.getElementById('done-backdrop').classList.add('hidden');document.getElementById('details-page').classList.add('hidden');document.getElementById('thanks-page').classList.remove('hidden');window.scrollTo({top:0,behavior:'smooth'});});
 ['date','time'].forEach(id=>{const field=document.getElementById(id);field.addEventListener('click',()=>{if(typeof field.showPicker==='function'){try{field.showPicker();}catch(e){}}});});
 })();
 </script>
