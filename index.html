@@ -47,8 +47,9 @@
   <section class="modal" role="dialog" aria-modal="true" aria-labelledby="done-title">
     <div style="font-size:38px">💌</div>
     <h2 id="done-title">Akkor ez <em>randi!</em> 💗</h2>
-    <p id="summary"></p>
+    <p id="summary" style="white-space:pre-line"></p>
     <p>Alig várom! 😍</p>
+    <p class="fine">Emlékeztető: ez teljesen komoly. A mosoly nem opcionális. 😂</p>
     <button class="yes confirm" id="close" type="button">Vettem az adást! 😇</button>
   </section>
 </div>
@@ -60,7 +61,7 @@ function moveNo(){tries++;const pad=12,w=no.offsetWidth,h=no.offsetHeight;const 
 no.addEventListener('click',moveNo);
 document.getElementById('yes').addEventListener('click',()=>{document.getElementById('invite-page').classList.add('hidden');document.getElementById('details-page').classList.remove('hidden');document.getElementById('no').classList.add('hidden');});
 const d=new Date();d.setMinutes(d.getMinutes()-d.getTimezoneOffset());document.getElementById('date').min=d.toISOString().slice(0,10);
-document.getElementById('plan').addEventListener('submit',e=>{e.preventDefault();const type=document.querySelector('input[name="type"]:checked');const date=document.getElementById('date').value.split('-').reverse().join('. ')+'.';const place=document.getElementById('place').value.trim();document.getElementById('summary').textContent='📅 '+date+' · 🕒 '+document.getElementById('time').value+' · '+type.value+(place?' · 📍 '+place:'')+'.';document.getElementById('details-page').classList.add('hidden');document.getElementById('done-backdrop').classList.remove('hidden');});
+document.getElementById('plan').addEventListener('submit',e=>{e.preventDefault();const type=document.querySelector('input[name="type"]:checked');const date=document.getElementById('date').value.split('-').reverse().join('. ')+'.';const place=document.getElementById('place').value.trim();document.getElementById('summary').textContent='📅 '+date+' · 🕒 '+document.getElementById('time').value+'\\n🎉 '+type.value+(place?'\\n💬 '+place:'');document.getElementById('details-page').classList.add('hidden');document.getElementById('done-backdrop').classList.remove('hidden');});
 document.getElementById('close').addEventListener('click',()=>{document.getElementById('done-backdrop').classList.add('hidden');document.getElementById('details-page').classList.remove('hidden');});
 })();
 </script>
